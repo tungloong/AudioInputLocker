@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SCHEME="InputSoundMenu"
 CONFIGURATION="${CONFIGURATION:-Debug}"
+DESTINATION="${DESTINATION:-platform=macOS,arch=arm64}"
 DERIVED_DATA_PATH="$ROOT_DIR/build/DerivedData"
 APP_PATH="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION/InputSoundMenu.app"
 
@@ -11,6 +12,7 @@ xcodebuild \
   -project "$ROOT_DIR/InputSoundMenu.xcodeproj" \
   -scheme "$SCHEME" \
   -configuration "$CONFIGURATION" \
+  -destination "$DESTINATION" \
   -derivedDataPath "$DERIVED_DATA_PATH" \
   CODE_SIGNING_ALLOWED=NO \
   build

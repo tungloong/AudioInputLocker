@@ -252,13 +252,13 @@ final class CoreAudioInputManager {
 
     private func stringProperty(_ selector: AudioObjectPropertySelector, for objectID: AudioObjectID) -> String? {
         var address = propertyAddress(selector: selector, scope: kAudioObjectPropertyScopeGlobal)
-        var value: CFString = "" as CFString
-        var dataSize = UInt32(MemoryLayout<CFString>.size)
+        var value: Unmanaged<CFString>?
+        var dataSize = UInt32(MemoryLayout<Unmanaged<CFString>?>.size)
 
         let status = AudioObjectGetPropertyData(objectID, &address, 0, nil, &dataSize, &value)
-        guard status == noErr else { return nil }
+        guard status == noErr, let value else { return nil }
 
-        return value as String
+        return value.takeRetainedValue() as String
     }
 
     private func integerProperty(_ selector: AudioObjectPropertySelector, for objectID: AudioObjectID) -> UInt32? {

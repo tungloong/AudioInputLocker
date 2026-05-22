@@ -12,6 +12,7 @@
 		0A0000010000000000000003 /* InputDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0000010000000000000013 /* InputDevice.swift */; };
 		0A0000010000000000000004 /* CoreAudioInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0000010000000000000014 /* CoreAudioInputManager.swift */; };
 		0A0000010000000000000005 /* AudioInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0000010000000000000015 /* AudioInputViewModel.swift */; };
+		0A0000010000000000000006 /* HUDMicrophone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0000010000000000000017 /* HUDMicrophone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		0A0000010000000000000014 /* CoreAudioInputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAudioInputManager.swift; sourceTree = "<group>"; };
 		0A0000010000000000000015 /* AudioInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioInputViewModel.swift; sourceTree = "<group>"; };
 		0A0000010000000000000016 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A0000010000000000000017 /* HUDMicrophone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HUDMicrophone.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 					0A0000010000000000000015 /* AudioInputViewModel.swift */,
 					0A0000010000000000000014 /* CoreAudioInputManager.swift */,
 					0A0000010000000000000013 /* InputDevice.swift */,
+				0A0000010000000000000017 /* HUDMicrophone.png */,
 				0A0000010000000000000016 /* Info.plist */,
 			);
 			path = InputSoundMenu;
@@ -122,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A0000010000000000000006 /* HUDMicrophone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +281,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					AppIntents,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.InputSoundMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -304,6 +313,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					AppIntents,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.InputSoundMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

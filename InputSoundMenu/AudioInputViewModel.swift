@@ -783,7 +783,7 @@ private final class PreferredInputHUD {
     }
 
     private enum Timing {
-        static let initialVisibleDuration: TimeInterval = 2.2
+        static let initialVisibleDuration: TimeInterval = 4.2
         static let hoverExitVisibleDuration: TimeInterval = 0.8
         static let unlockConfirmationDuration: TimeInterval = 1.4
     }
@@ -1228,6 +1228,11 @@ private final class PreferredInputHUDPanel: NSPanel {
 private struct PreferredInputHUDView: View {
     static let windowSize = NSSize(width: 360, height: 136)
     static let capsuleSize = CGSize(width: 235, height: 52)
+    static let glassButtonLabelSize = CGSize(width: 225, height: 44)
+    static let hudIconSize: CGFloat = 34
+    static let textColumnWidth: CGFloat = 128
+    static let contentLeadingInset: CGFloat = 15
+    static let contentTrailingInset: CGFloat = 13
     static let visualCapsuleFrame = NSRect(
         x: (windowSize.width - capsuleSize.width) / 2,
         y: (windowSize.height - capsuleSize.height) / 2,
@@ -1270,41 +1275,23 @@ private struct PreferredInputHUDView: View {
     private var capsule: some View {
         if #available(macOS 26.0, *) {
             ZStack {
-                GlassEffectContainer(spacing: 0) {
-                    RoundedRectangle(cornerRadius: 26, style: .continuous)
-                        .fill(milkyGlassFill)
-                        .frame(width: Self.capsuleSize.width, height: Self.capsuleSize.height)
-                        .glassEffect(liquidGlass, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
-                }
+                glassButtonCapsule
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 hudContent
-                    .padding(.leading, 15)
-                    .padding(.trailing, 13)
                     .frame(width: Self.capsuleSize.width, height: Self.capsuleSize.height)
             }
             .frame(width: Self.capsuleSize.width, height: Self.capsuleSize.height)
             .overlay {
-                RoundedRectangle(cornerRadius: 26, style: .continuous)
-                    .strokeBorder(edgeHighlight, lineWidth: 0.65)
+                capsuleRimHighlight
             }
-            .overlay(alignment: .topLeading) {
-                Capsule(style: .continuous)
-                    .fill(Color.white.opacity(isDark ? 0.18 : 0.48))
-                    .frame(width: 110, height: 0.9)
-                    .blur(radius: 0.25)
-                    .padding(.leading, 32)
-                    .padding(.top, 1.3)
-            }
-            .shadow(color: Color.black.opacity(isDark ? 0.28 : 0.16), radius: 18, x: 0, y: 12)
-            .shadow(color: Color.white.opacity(isDark ? 0.02 : 0.36), radius: 10, x: 0, y: -1)
             .contentShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
             .overlay(alignment: .topLeading) {
                 closeButton
             }
         } else {
             hudContent
-                .padding(.leading, 15)
-                .padding(.trailing, 13)
                 .frame(width: Self.capsuleSize.width, height: Self.capsuleSize.height)
                 .background(fallbackBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
@@ -1321,45 +1308,110 @@ private struct PreferredInputHUDView: View {
     }
 
     private var hudContent: some View {
-        HStack(spacing: 9) {
-            PreferredInputHUDIcon(isDark: isDark)
-                .frame(width: 39, height: 39)
+        ZStack {
+            textContent
+                .frame(width: Self.textColumnWidth)
 
-            VStack(alignment: .leading, spacing: 0) {
-                MarqueeText(
-                    deviceName,
-                    font: .system(size: 13, weight: .semibold),
-                    foregroundColor: isDark ? Color.white : Color.black,
-                    height: 16
-                )
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                PreferredInputHUDIcon(size: Self.hudIconSize)
+                    .frame(width: Self.hudIconSize, height: Self.hudIconSize)
 
-                Text(detail)
-                    .font(.system(size: 12, weight: .regular))
-                    .foregroundStyle(isDark ? Color.white.opacity(0.72) : Color.black.opacity(0.60))
-                    .lineLimit(1)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.85)
-                    .truncationMode(.middle)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                Spacer(minLength: 0)
+
+                lockButton
             }
-            .layoutPriority(1)
-
-            Button(action: toggleLockState) {
-                ZStack {
-                    Circle()
-                        .fill(lockButtonBackground)
-
-                    Image(systemName: isUnlocked ? "lock.open.fill" : "lock.fill")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(lockButtonForeground)
-                }
-                .frame(width: 24, height: 24)
-                .contentShape(Circle())
-            }
-            .buttonStyle(.plain)
-            .help(isUnlocked ? "Lock input device" : "Unlock input device")
+            .padding(.leading, Self.contentLeadingInset)
+            .padding(.trailing, Self.contentTrailingInset)
         }
+    }
+
+    private var textContent: some View {
+        VStack(alignment: .center, spacing: 0) {
+            MarqueeText(
+                deviceName,
+                font: .system(size: 13, weight: .semibold),
+                foregroundColor: isDark ? Color.white : Color.black,
+                height: 16,
+                alignment: .center
+            )
+            .frame(maxWidth: .infinity, alignment: .center)
+
+            Text(detail)
+                .font(.system(size: 12, weight: .regular))
+                .foregroundStyle(isDark ? Color.white.opacity(0.72) : Color.black.opacity(0.60))
+                .lineLimit(1)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.85)
+                .truncationMode(.middle)
+                .frame(maxWidth: .infinity, alignment: .center)
+        }
+    }
+
+    private var lockButton: some View {
+        Button(action: toggleLockState) {
+            ZStack {
+                Circle()
+                    .fill(lockButtonBackground)
+
+                Image(systemName: isUnlocked ? "lock.open.fill" : "lock.fill")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(lockButtonForeground)
+            }
+            .frame(width: 24, height: 24)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .help(isUnlocked ? "Lock input device" : "Unlock input device")
+    }
+
+    private var capsuleRimHighlight: some View {
+        ZStack {
+            Capsule(style: .continuous)
+                .stroke(Color.white.opacity(isDark ? 0.26 : 0.58), lineWidth: 1.05)
+                .blur(radius: 0.35)
+                .offset(y: -0.2)
+
+            Capsule(style: .continuous)
+                .strokeBorder(capsuleRimGradient, lineWidth: isDark ? 0.95 : 1.05)
+
+            Capsule(style: .continuous)
+                .inset(by: 1.15)
+                .strokeBorder(Color.white.opacity(isDark ? 0.12 : 0.32), lineWidth: 0.55)
+        }
+        .allowsHitTesting(false)
+    }
+
+    private var capsuleRimGradient: LinearGradient {
+        LinearGradient(
+            colors: isDark
+                ? [
+                    Color.white.opacity(0.42),
+                    Color.white.opacity(0.24),
+                    Color.white.opacity(0.10),
+                    Color.black.opacity(0.16)
+                ]
+                : [
+                    Color.white.opacity(0.96),
+                    Color.white.opacity(0.82),
+                    Color.white.opacity(0.34),
+                    Color.black.opacity(0.07)
+                ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    @available(macOS 26.0, *)
+    private var glassButtonCapsule: some View {
+        Button(action: {}) {
+            Color.clear
+                .frame(width: Self.glassButtonLabelSize.width, height: Self.glassButtonLabelSize.height)
+        }
+        .buttonStyle(.glass)
+        .buttonBorderShape(.capsule)
+        .frame(width: Self.capsuleSize.width, height: Self.capsuleSize.height)
+        .shadow(color: Color.black.opacity(isDark ? 0.26 : 0.10), radius: isDark ? 8 : 6.5, x: 0, y: isDark ? 5 : 3.5)
+        .shadow(color: Color.black.opacity(isDark ? 0.14 : 0.055), radius: 1.6, x: 0, y: 0.8)
     }
 
     private func toggleLockState() {
@@ -1412,41 +1464,6 @@ private struct PreferredInputHUDView: View {
         isUnlocked ? Color(nsColor: .secondaryLabelColor) : .white
     }
 
-    @available(macOS 26.0, *)
-    private var liquidGlass: Glass {
-        if isDark {
-            return .regular
-                .tint(Color.white.opacity(0.035))
-                .interactive()
-        }
-
-        return .regular
-            .tint(Color.white.opacity(0.24))
-            .interactive()
-    }
-
-    private var milkyGlassFill: Color {
-        isDark ? Color.white.opacity(0.035) : Color.white.opacity(0.24)
-    }
-
-    private var edgeHighlight: LinearGradient {
-        LinearGradient(
-            colors: isDark
-                ? [
-                    Color.white.opacity(0.34),
-                    Color.white.opacity(0.10),
-                    Color.black.opacity(0.16)
-                ]
-                : [
-                    Color.white.opacity(0.78),
-                    Color.white.opacity(0.36),
-                    Color.black.opacity(0.055)
-                ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
     @ViewBuilder
     private var fallbackBackground: some View {
         if reduceTransparency {
@@ -1485,17 +1502,19 @@ private struct MarqueeText: View {
     let font: Font
     let foregroundColor: Color
     let height: CGFloat
+    let alignment: Alignment
 
     @State private var measuredTextWidth: CGFloat = 0
 
     private let spacing: CGFloat = 22
     private let pixelsPerSecond: CGFloat = 24
 
-    init(_ text: String, font: Font, foregroundColor: Color, height: CGFloat) {
+    init(_ text: String, font: Font, foregroundColor: Color, height: CGFloat, alignment: Alignment = .leading) {
         self.text = text
         self.font = font
         self.foregroundColor = foregroundColor
         self.height = height
+        self.alignment = alignment
     }
 
     var body: some View {
@@ -1503,7 +1522,7 @@ private struct MarqueeText: View {
             let availableWidth = geometry.size.width
             let shouldScroll = measuredTextWidth > availableWidth
 
-            ZStack(alignment: .leading) {
+            ZStack(alignment: shouldScroll ? .leading : alignment) {
                 if shouldScroll {
                     TimelineView(.animation(minimumInterval: 1 / 60)) { context in
                         let travelDistance = measuredTextWidth + spacing
@@ -1521,7 +1540,7 @@ private struct MarqueeText: View {
                     textView
                 }
             }
-            .frame(width: availableWidth, height: height, alignment: .leading)
+            .frame(width: availableWidth, height: height, alignment: shouldScroll ? .leading : alignment)
             .clipped()
         }
         .frame(height: height)
@@ -1560,324 +1579,23 @@ private struct MarqueeTextWidthPreferenceKey: PreferenceKey {
 }
 
 private struct PreferredInputHUDIcon: View {
-    let isDark: Bool
+    let size: CGFloat
 
     var body: some View {
-        MusicMicrophoneGlyph(isDark: isDark)
-    }
-}
-
-private struct MusicMicrophoneGlyph: View {
-    let isDark: Bool
-
-    var body: some View {
-        ZStack {
-            Ellipse()
-                .fill(Color.black.opacity(isDark ? 0.26 : 0.13))
-                .frame(width: 24, height: 4.5)
-                .blur(radius: 1.8)
-                .rotationEffect(.degrees(-16))
-                .offset(x: -6.2, y: 12.4)
-
-            musicMicrophoneStand
-                .offset(x: 1.6, y: 8.8)
-
-            VStack(spacing: -0.35) {
-                microphoneHead
-
-                RoundedRectangle(cornerRadius: 1.5, style: .continuous)
-                    .fill(chromeBand)
-                    .frame(width: 13.7, height: 2.7)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 1.5, style: .continuous)
-                            .strokeBorder(Color.white.opacity(isDark ? 0.24 : 0.70), lineWidth: 0.45)
-                    }
-                    .shadow(color: Color.black.opacity(isDark ? 0.30 : 0.14), radius: 0.5, x: 0, y: 0.45)
-
-                MicrophoneHandleShape()
-                    .fill(handleBody)
-                    .frame(width: 12.7, height: 21.6)
-                    .overlay {
-                        MicrophoneHandleShape()
-                            .stroke(Color.white.opacity(isDark ? 0.26 : 0.64), lineWidth: 0.55)
-                    }
-                    .overlay(alignment: .top) {
-                        Capsule(style: .continuous)
-                            .fill(Color.black.opacity(isDark ? 0.36 : 0.22))
-                            .frame(width: 12.1, height: 0.8)
-                            .offset(y: 0.1)
-                    }
-                    .overlay(alignment: .center) {
-                        Circle()
-                            .fill(buttonFill)
-                            .frame(width: 3.7, height: 3.7)
-                            .overlay {
-                                Circle()
-                                    .strokeBorder(Color.white.opacity(isDark ? 0.24 : 0.56), lineWidth: 0.35)
-                            }
-                            .offset(y: -2.2)
-                    }
-                    .overlay(alignment: .leading) {
-                        Capsule(style: .continuous)
-                            .fill(Color.white.opacity(isDark ? 0.45 : 0.92))
-                            .frame(width: 0.95, height: 17.1)
-                            .blur(radius: 0.15)
-                            .offset(x: 2.55, y: 1.0)
-                    }
-                    .overlay(alignment: .trailing) {
-                        Capsule(style: .continuous)
-                            .fill(Color.black.opacity(isDark ? 0.11 : 0.055))
-                            .frame(width: 0.95, height: 17.2)
-                            .blur(radius: 0.2)
-                            .offset(x: -2.45, y: 1.0)
-                    }
-
-                RoundedRectangle(cornerRadius: 1.0, style: .continuous)
-                    .fill(baseCap)
-                    .frame(width: 7.3, height: 2.1)
-                    .overlay(alignment: .top) {
-                        Capsule(style: .continuous)
-                            .fill(Color.white.opacity(isDark ? 0.22 : 0.54))
-                            .frame(width: 5.2, height: 0.6)
-                            .offset(y: 0.35)
-                    }
+        Group {
+            if let image = NSImage(named: "HUDMicrophone") ?? NSImage(named: "HUDMicrophone.png") {
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                Image(systemName: "music.microphone")
+                    .font(.system(size: size * 0.70, weight: .regular))
+                    .symbolRenderingMode(.hierarchical)
             }
-            .rotationEffect(.degrees(45))
-            .scaleEffect(0.92)
-            .offset(x: -2.0, y: -1.4)
         }
-        .frame(width: 39, height: 39)
+        .frame(width: size, height: size)
         .compositingGroup()
-        .shadow(color: .black.opacity(isDark ? 0.20 : 0.12), radius: 1.35, x: 0.35, y: 0.9)
-    }
-
-    private var microphoneHead: some View {
-        ZStack {
-            MicrophoneHeadShape()
-                .fill(headBody)
-                .frame(width: 14.2, height: 12.8)
-                .overlay {
-                    MicrophoneMesh()
-                        .stroke(Color.black.opacity(isDark ? 0.42 : 0.28), lineWidth: 0.55)
-                        .frame(width: 11.2, height: 9.9)
-                        .clipShape(MicrophoneHeadShape())
-                }
-                .overlay {
-                    MicrophoneMesh(phase: .secondary)
-                        .stroke(Color.white.opacity(isDark ? 0.20 : 0.62), lineWidth: 0.38)
-                        .frame(width: 11.4, height: 9.8)
-                        .clipShape(MicrophoneHeadShape())
-                }
-                .overlay(alignment: .topLeading) {
-                    Ellipse()
-                        .fill(Color.white.opacity(isDark ? 0.48 : 0.86))
-                        .frame(width: 5.4, height: 2.9)
-                        .blur(radius: 0.55)
-                        .offset(x: 2.6, y: 1.6)
-                }
-                .overlay {
-                    MicrophoneHeadShape()
-                        .stroke(Color.white.opacity(isDark ? 0.28 : 0.76), lineWidth: 0.65)
-                }
-                .shadow(color: Color.black.opacity(isDark ? 0.32 : 0.16), radius: 0.65, x: 0.5, y: 0.65)
-        }
-    }
-
-    private var musicMicrophoneStand: some View {
-        VStack(spacing: -0.3) {
-            Capsule(style: .continuous)
-                .fill(baseCap)
-                .frame(width: 2.1, height: 3.6)
-                .overlay(alignment: .leading) {
-                    Capsule(style: .continuous)
-                        .fill(Color.white.opacity(isDark ? 0.16 : 0.42))
-                        .frame(width: 0.45, height: 2.5)
-                        .offset(x: 0.35)
-                }
-
-            RoundedRectangle(cornerRadius: 0.9, style: .continuous)
-                .fill(baseCap)
-                .frame(width: 3.0, height: 8.7)
-                .overlay(alignment: .leading) {
-                    Capsule(style: .continuous)
-                        .fill(Color.white.opacity(isDark ? 0.16 : 0.46))
-                        .frame(width: 0.65, height: 6.8)
-                        .offset(x: 0.55)
-                }
-
-            RoundedRectangle(cornerRadius: 1.3, style: .continuous)
-                .fill(chromeBand)
-                .frame(width: 9.0, height: 2.5)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 1.3, style: .continuous)
-                        .strokeBorder(Color.white.opacity(isDark ? 0.18 : 0.56), lineWidth: 0.35)
-                }
-                .shadow(color: Color.black.opacity(isDark ? 0.28 : 0.12), radius: 0.45, x: 0.25, y: 0.45)
-        }
-    }
-
-    private var handleBody: LinearGradient {
-        LinearGradient(
-            colors: isDark
-                ? [
-                    Color(red: 1.00, green: 1.00, blue: 1.00),
-                    Color(red: 0.86, green: 0.88, blue: 0.91),
-                    Color(red: 0.54, green: 0.58, blue: 0.63)
-                ]
-                : [
-                    Color.white,
-                    Color(red: 0.98, green: 0.99, blue: 1.00),
-                    Color(red: 0.82, green: 0.85, blue: 0.89)
-                ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    private var headBody: LinearGradient {
-        LinearGradient(
-            colors: isDark
-                ? [
-                    Color.white,
-                    Color(red: 0.88, green: 0.90, blue: 0.93),
-                    Color(red: 0.56, green: 0.60, blue: 0.66),
-                    Color(red: 0.35, green: 0.38, blue: 0.43)
-                ]
-                : [
-                    Color.white,
-                    Color(red: 0.98, green: 0.99, blue: 1.00),
-                    Color(red: 0.78, green: 0.81, blue: 0.86),
-                    Color(red: 0.52, green: 0.56, blue: 0.62)
-                ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    private var chromeBand: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color.white,
-                Color(red: 0.86, green: 0.88, blue: 0.91),
-                Color(red: 0.54, green: 0.57, blue: 0.62)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    private var buttonFill: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color.white.opacity(isDark ? 0.30 : 0.78),
-                Color.black.opacity(isDark ? 0.14 : 0.07)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    private var baseCap: LinearGradient {
-        LinearGradient(
-            colors: [
-                Color(red: 0.92, green: 0.89, blue: 0.84),
-                Color(red: 0.70, green: 0.66, blue: 0.58),
-                Color(red: 0.48, green: 0.45, blue: 0.39)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-}
-
-private struct MicrophoneHeadShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let sideInset = rect.width * 0.08
-        let bottomInset = rect.width * 0.06
-        let shoulderY = rect.minY + rect.height * 0.50
-        let bottomY = rect.maxY - 0.25
-
-        path.move(to: CGPoint(x: rect.minX + bottomInset, y: bottomY))
-        path.addLine(to: CGPoint(x: rect.minX + sideInset, y: shoulderY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.midX, y: rect.minY),
-            control: CGPoint(x: rect.minX + sideInset * 0.1, y: rect.minY + rect.height * 0.07)
-        )
-        path.addQuadCurve(
-            to: CGPoint(x: rect.maxX - sideInset, y: shoulderY),
-            control: CGPoint(x: rect.maxX - sideInset * 0.1, y: rect.minY + rect.height * 0.07)
-        )
-        path.addLine(to: CGPoint(x: rect.maxX - bottomInset, y: bottomY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.minX + bottomInset, y: bottomY),
-            control: CGPoint(x: rect.midX, y: rect.maxY + 0.45)
-        )
-        path.closeSubpath()
-
-        return path
-    }
-}
-
-private struct MicrophoneHandleShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let topInset: CGFloat = rect.width * 0.04
-        let bottomInset: CGFloat = rect.width * 0.28
-
-        path.move(to: CGPoint(x: rect.minX + topInset, y: rect.minY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.maxX - topInset, y: rect.minY),
-            control: CGPoint(x: rect.midX, y: rect.minY - 0.35)
-        )
-        path.addLine(to: CGPoint(x: rect.maxX - bottomInset, y: rect.maxY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.minX + bottomInset, y: rect.maxY),
-            control: CGPoint(x: rect.midX, y: rect.maxY + 0.7)
-        )
-        path.closeSubpath()
-
-        return path
-    }
-}
-
-private struct MicrophoneMesh: Shape {
-    enum Phase {
-        case primary
-        case secondary
-    }
-
-    var phase: Phase = .primary
-
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let horizontalCount = 5
-        let verticalCount = 5
-        let phaseOffset: CGFloat = phase == .primary ? 0 : 1.1
-
-        for index in 0..<horizontalCount {
-            let progress = CGFloat(index + 1) / CGFloat(horizontalCount + 1)
-            let y = rect.minY + rect.height * progress
-            let inset = abs(progress - 0.52) * rect.width * 0.34 + phaseOffset * 0.12
-            path.move(to: CGPoint(x: rect.minX + inset, y: y))
-            path.addQuadCurve(
-                to: CGPoint(x: rect.maxX - inset, y: y),
-                control: CGPoint(x: rect.midX, y: y + (progress < 0.52 ? -0.8 : 0.7))
-            )
-        }
-
-        for index in 0..<verticalCount {
-            let progress = CGFloat(index + 1) / CGFloat(verticalCount + 1)
-            let x = rect.minX + rect.width * progress
-            let bow = (progress - 0.5) * 2.8
-            path.move(to: CGPoint(x: x, y: rect.minY + 0.8))
-            path.addQuadCurve(
-                to: CGPoint(x: x, y: rect.maxY - 0.6),
-                control: CGPoint(x: x + bow, y: rect.midY + phaseOffset * 0.15)
-            )
-        }
-
-        return path
+        .shadow(color: .black.opacity(0.14), radius: 1.4, x: 0.35, y: 0.9)
     }
 }
 
