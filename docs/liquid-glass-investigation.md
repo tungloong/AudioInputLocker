@@ -1,8 +1,10 @@
 # Liquid Glass HUD Investigation
 
-Date: 2026-05-18  
-Project: `InputSoundMenu`  
-Repository path: `/Users/tungloong/Documents/Codex/2026-05-15/macos-app-wi-fi-ui-app`
+Date: 2026-05-18
+Project: `AudioInputLocker`
+
+> Historical note: this document records an earlier HUD investigation and may
+> mention experiments that have since been removed or replaced.
 
 ## Purpose
 
@@ -61,17 +63,17 @@ BUILD SUCCEEDED
 
 ## Relevant Files
 
-Current Liquid Glass experiment:
+Historical Liquid Glass experiment:
 
-- `InputSoundMenu/LiquidGlassLab.swift`
+- `AudioInputLocker/LiquidGlassLab.swift` (removed)
 
 Current menu entry for toggling the experiment:
 
-- `InputSoundMenu/SoundMenuView.swift`
+- `AudioInputLocker/SoundMenuView.swift`
 
 Current production HUD glass container:
 
-- `InputSoundMenu/AudioInputViewModel.swift`
+- `AudioInputLocker/AudioInputViewModel.swift`
 
 ## Current Implementations
 

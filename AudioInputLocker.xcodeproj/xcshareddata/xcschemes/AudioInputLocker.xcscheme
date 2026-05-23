@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0A0000010000000000000040"
-               BuildableName = "InputSoundMenu.app"
-               BlueprintName = "InputSoundMenu"
-               ReferencedContainer = "container:InputSoundMenu.xcodeproj">
+               BuildableName = "AudioInputLocker.app"
+               BlueprintName = "AudioInputLocker"
+               ReferencedContainer = "container:AudioInputLocker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A0000010000000000000040"
-            BuildableName = "InputSoundMenu.app"
-            BlueprintName = "InputSoundMenu"
-            ReferencedContainer = "container:InputSoundMenu.xcodeproj">
+            BuildableName = "AudioInputLocker.app"
+            BlueprintName = "AudioInputLocker"
+            ReferencedContainer = "container:AudioInputLocker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A0000010000000000000040"
-            BuildableName = "InputSoundMenu.app"
-            BlueprintName = "InputSoundMenu"
-            ReferencedContainer = "container:InputSoundMenu.xcodeproj">
+            BuildableName = "AudioInputLocker.app"
+            BlueprintName = "AudioInputLocker"
+            ReferencedContainer = "container:AudioInputLocker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

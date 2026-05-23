@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct InputSoundMenuApp: App {
+struct AudioInputLockerApp: App {
     @StateObject private var viewModel = AudioInputViewModel()
 
     var body: some Scene {

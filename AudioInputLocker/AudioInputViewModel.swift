@@ -85,7 +85,7 @@ final class AudioInputViewModel: ObservableObject {
     }
 
     private let audioManager = CoreAudioInputManager()
-    private let volumeWriteQueue = DispatchQueue(label: "InputSoundMenu.VolumeWrite", qos: .userInitiated)
+    private let volumeWriteQueue = DispatchQueue(label: "AudioInputLocker.VolumeWrite", qos: .userInitiated)
 
     private var volumeWriteWorkItem: DispatchWorkItem?
     private var pendingManualSelectionUID: String?
@@ -673,7 +673,7 @@ final class AudioInputViewModel: ObservableObject {
             errorMessage = nil
             PreferredInputHUD.shared.show(
                 deviceName: preferredDevice.displayName,
-                detail: "Currently Locked",
+                detail: NSLocalizedString("Currently Locked", comment: "HUD lock status"),
                 stackBelowNativeHUD: currentDevice.mayTriggerNativeRouteHUD,
                 unlock: { [weak self] in
                     self?.unlockInputFromHUD()
@@ -733,7 +733,7 @@ final class AudioInputViewModel: ObservableObject {
     #if DEBUG
     private func installDebugHUDTrigger() {
         debugHUDObserver = DistributedNotificationCenter.default().addObserver(
-            forName: Notification.Name("InputSoundMenu.ShowPreferredInputHUD"),
+            forName: Notification.Name("AudioInputLocker.ShowPreferredInputHUD"),
             object: nil,
             queue: .main
         ) { [weak self] notification in
@@ -745,7 +745,7 @@ final class AudioInputViewModel: ObservableObject {
 
                 PreferredInputHUD.shared.show(
                     deviceName: deviceName ?? device?.displayName ?? "Wireless Mic Rx",
-                    detail: detail ?? "Currently Locked",
+                    detail: detail ?? NSLocalizedString("Currently Locked", comment: "HUD lock status"),
                     stackBelowNativeHUD: false,
                     unlock: { [weak self] in
                         self?.unlockInputFromHUD()
@@ -1361,7 +1361,11 @@ private struct PreferredInputHUDView: View {
             .contentShape(Circle())
         }
         .buttonStyle(.plain)
-        .help(isUnlocked ? "Lock input device" : "Unlock input device")
+        .help(
+            isUnlocked
+                ? NSLocalizedString("Lock input device", comment: "HUD lock button tooltip")
+                : NSLocalizedString("Unlock input device", comment: "HUD lock button tooltip")
+        )
     }
 
     private var capsuleRimHighlight: some View {
@@ -1448,7 +1452,7 @@ private struct PreferredInputHUDView: View {
             .buttonStyle(.plain)
             .offset(x: -4, y: -2)
             .transition(.opacity.combined(with: .scale(scale: 0.88)))
-            .help("Close")
+            .help(NSLocalizedString("Close", comment: "HUD close button tooltip"))
         }
     }
 

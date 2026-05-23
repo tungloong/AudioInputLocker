@@ -8,7 +8,11 @@ enum CoreAudioInputError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case let .osStatus(status, operation):
-            return "\(operation) failed with OSStatus \(status)."
+            return String(
+                format: NSLocalizedString("%@ failed with OSStatus %d.", comment: "Core Audio OSStatus failure message"),
+                operation,
+                Int(status)
+            )
         case let .unavailable(message):
             return message
         }
@@ -24,7 +28,7 @@ final class CoreAudioInputManager {
     }
 
     private let systemObjectID = AudioObjectID(kAudioObjectSystemObject)
-    private let listenerQueue = DispatchQueue(label: "InputSoundMenu.CoreAudioListeners")
+    private let listenerQueue = DispatchQueue(label: "AudioInputLocker.CoreAudioListeners")
     private var systemListeners: [ListenerRegistration] = []
     private var volumeListeners: [ListenerRegistration] = []
     private var changeHandler: (() -> Void)?
@@ -63,7 +67,7 @@ final class CoreAudioInputManager {
                 return InputDevice(
                     id: deviceID,
                     uid: stringProperty(kAudioDevicePropertyDeviceUID, for: deviceID) ?? "\(deviceID)",
-                    name: stringProperty(kAudioObjectPropertyName, for: deviceID) ?? "Input Device",
+                    name: stringProperty(kAudioObjectPropertyName, for: deviceID) ?? NSLocalizedString("Input Device", comment: "Fallback input device name"),
                     manufacturer: stringProperty(kAudioObjectPropertyManufacturer, for: deviceID) ?? "",
                     modelUID: stringProperty(kAudioDevicePropertyModelUID, for: deviceID) ?? "",
                     transportType: integerProperty(kAudioDevicePropertyTransportType, for: deviceID) ?? 0,
@@ -85,11 +89,11 @@ final class CoreAudioInputManager {
 
         try check(
             AudioObjectGetPropertyData(systemObjectID, &address, 0, nil, &dataSize, &deviceID),
-            "Read default input device"
+            NSLocalizedString("Read default input device", comment: "Core Audio operation name")
         )
 
         guard deviceID != kAudioObjectUnknown else {
-            throw CoreAudioInputError.unavailable("No default input device is available.")
+            throw CoreAudioInputError.unavailable(NSLocalizedString("No default input device is available.", comment: "Core Audio unavailable error"))
         }
 
         return deviceID
@@ -105,7 +109,7 @@ final class CoreAudioInputManager {
 
         try check(
             AudioObjectSetPropertyData(systemObjectID, &address, 0, nil, dataSize, &mutableDeviceID),
-            "Set default input device"
+            NSLocalizedString("Set default input device", comment: "Core Audio operation name")
         )
     }
 
@@ -121,7 +125,7 @@ final class CoreAudioInputManager {
         let elements = volumeElements(for: deviceID, maxChannels: channels, requireSettable: true)
 
         guard !elements.isEmpty else {
-            throw CoreAudioInputError.unavailable("This input device does not expose a writable input volume.")
+            throw CoreAudioInputError.unavailable(NSLocalizedString("This input device does not expose a writable input volume.", comment: "Core Audio unavailable error"))
         }
 
         var clampedVolume = min(max(volume, 0), 1)
@@ -135,7 +139,7 @@ final class CoreAudioInputManager {
             )
             try check(
                 AudioObjectSetPropertyData(deviceID, &address, 0, nil, dataSize, &clampedVolume),
-                "Set input volume"
+                NSLocalizedString("Set input volume", comment: "Core Audio operation name")
             )
         }
     }
@@ -199,7 +203,7 @@ final class CoreAudioInputManager {
 
         try check(
             AudioObjectGetPropertyDataSize(systemObjectID, &address, 0, nil, &dataSize),
-            "Read audio device list size"
+            NSLocalizedString("Read audio device list size", comment: "Core Audio operation name")
         )
 
         let count = Int(dataSize) / MemoryLayout<AudioDeviceID>.size
@@ -208,11 +212,11 @@ final class CoreAudioInputManager {
         var devices = [AudioDeviceID](repeating: 0, count: count)
         try devices.withUnsafeMutableBufferPointer { buffer in
             guard let baseAddress = buffer.baseAddress else {
-                throw CoreAudioInputError.unavailable("Unable to allocate the audio device list.")
+                throw CoreAudioInputError.unavailable(NSLocalizedString("Unable to allocate the audio device list.", comment: "Core Audio unavailable error"))
             }
             try check(
                 AudioObjectGetPropertyData(systemObjectID, &address, 0, nil, &dataSize, baseAddress),
-                "Read audio device list"
+                NSLocalizedString("Read audio device list", comment: "Core Audio operation name")
             )
         }
 
@@ -228,7 +232,7 @@ final class CoreAudioInputManager {
 
         try check(
             AudioObjectGetPropertyDataSize(deviceID, &address, 0, nil, &dataSize),
-            "Read input stream configuration size"
+            NSLocalizedString("Read input stream configuration size", comment: "Core Audio operation name")
         )
 
         let rawPointer = UnsafeMutableRawPointer.allocate(
@@ -239,7 +243,7 @@ final class CoreAudioInputManager {
 
         try check(
             AudioObjectGetPropertyData(deviceID, &address, 0, nil, &dataSize, rawPointer),
-            "Read input stream configuration"
+            NSLocalizedString("Read input stream configuration", comment: "Core Audio operation name")
         )
 
         let audioBufferList = rawPointer.assumingMemoryBound(to: AudioBufferList.self)

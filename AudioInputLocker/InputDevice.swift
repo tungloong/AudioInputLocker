@@ -15,7 +15,7 @@ struct InputDevice: Identifiable, Equatable {
     let inputVolume: Float?
 
     var displayName: String {
-        name.isEmpty ? "Unknown Input Device" : name
+        name.isEmpty ? NSLocalizedString("Unknown Input Device", comment: "Fallback input device name") : name
     }
 
     var secondaryText: String? {
