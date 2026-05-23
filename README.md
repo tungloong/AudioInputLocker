@@ -1,5 +1,9 @@
 # AudioInputLocker
 
+<p align="center">
+  <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
+</p>
+
 [English](README.md) | [简体中文](README_CN.md)
 
 AudioInputLocker is a small macOS menu bar app for managing the system default
@@ -88,8 +92,9 @@ device itself.
 - `AudioInputLocker/CoreAudioInputManager.swift`: Core Audio wrapper.
 - `AudioInputLocker/InputDevice.swift`: input device model and icon heuristics.
 - `AudioInputLocker/HUDMicrophone.png`: HUD microphone asset.
-- `AudioInputLocker/Assets.xcassets`: app icon asset catalog.
+- `AudioInputLocker/Assets.xcassets`: app icon and menu bar icon assets.
 - `scripts/build-and-run.sh`: local build and restart helper.
+- `docs/brand.md`: brand visuals and icon usage notes.
 - `docs/github-release.md`: GitHub repository setup notes.
 - `docs/app-store`: App Store metadata, privacy policy, and release checklist.
 - `docs/liquid-glass-investigation.md`: historical notes from HUD visual

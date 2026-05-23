@@ -1,5 +1,9 @@
 # AudioInputLocker
 
+<p align="center">
+  <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
+</p>
+
 [English](README.md) | [简体中文](README_CN.md)
 
 AudioInputLocker 是一个用于管理 macOS 系统默认音频输入设备的小型菜单栏 app。
@@ -75,8 +79,9 @@ App 当前包含：
 - `AudioInputLocker/CoreAudioInputManager.swift`：Core Audio 封装。
 - `AudioInputLocker/InputDevice.swift`：输入设备模型和图标推断逻辑。
 - `AudioInputLocker/HUDMicrophone.png`：HUD 麦克风资源。
-- `AudioInputLocker/Assets.xcassets`：app 图标资源目录。
+- `AudioInputLocker/Assets.xcassets`：app 图标和菜单栏图标资源目录。
 - `scripts/build-and-run.sh`：本地构建和重启辅助脚本。
+- `docs/brand.md`：品牌视觉和图标使用说明。
 - `docs/github-release.md`：GitHub 仓库设置说明。
 - `docs/app-store`：App Store metadata、隐私政策和发布检查清单。
 - `docs/liquid-glass-investigation.md`：HUD 视觉实验的历史记录。

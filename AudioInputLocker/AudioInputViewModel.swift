@@ -48,6 +48,10 @@ final class AudioInputViewModel: ObservableObject {
         !devices.isEmpty
     }
 
+    var menuBarIconName: String {
+        inputLockIsEffective ? "MenuBarIconLocked" : "MenuBarIcon"
+    }
+
     func menuDidOpen() {
         PreferredInputHUD.shared.dismissForMenuOpening()
     }
@@ -101,6 +105,17 @@ final class AudioInputViewModel: ObservableObject {
 
     private var currentDevice: InputDevice? {
         devices.first(where: \.isDefault)
+    }
+
+    private var inputLockIsEffective: Bool {
+        guard inputLockIsEnabled,
+              let lockedUID = storedPreferredUID,
+              let currentDevice else {
+            return false
+        }
+
+        return currentDevice.uid == lockedUID
+            && devices.contains { $0.uid == lockedUID }
     }
 
     private var storedPreferredUID: String? {
@@ -1089,10 +1104,18 @@ private final class PreferredInputHUD {
             return nil
         }
 
-        let preferredTitle = "music.microphone"
+        let preferredTitles = [
+            String(localized: "Sound"),
+            "Sound",
+            "AudioInputLocker",
+            "MenuBarIconLocked",
+            "MenuBarIcon",
+            "music.microphone"
+        ]
         let child = children.first {
-            axString($0, attribute: kAXTitleAttribute as CFString) == preferredTitle
-                || axString($0, attribute: kAXDescriptionAttribute as CFString) == preferredTitle
+            let title = axString($0, attribute: kAXTitleAttribute as CFString)
+            let description = axString($0, attribute: kAXDescriptionAttribute as CFString)
+            return preferredTitles.contains { title == $0 || description == $0 }
         } ?? children[0]
 
         guard let frame = axFrame(child),
