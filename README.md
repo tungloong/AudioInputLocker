@@ -51,7 +51,6 @@ xcodebuild \
   -configuration Debug \
   -destination 'platform=macOS,arch=arm64' \
   -derivedDataPath build/DerivedData \
-  CODE_SIGNING_ALLOWED=NO \
   build
 ```
 

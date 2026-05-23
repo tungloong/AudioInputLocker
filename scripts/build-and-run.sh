@@ -14,7 +14,6 @@ xcodebuild \
   -configuration "$CONFIGURATION" \
   -destination "$DESTINATION" \
   -derivedDataPath "$DERIVED_DATA_PATH" \
-  CODE_SIGNING_ALLOWED=NO \
   build
 
 pkill -x AudioInputLocker 2>/dev/null || true
@@ -22,4 +21,4 @@ pkill -x InputSoundMenu 2>/dev/null || true
 open -n "$APP_PATH"
 
 sleep 1
-pgrep -fl AudioInputLocker || true
+pgrep -x AudioInputLocker || true
