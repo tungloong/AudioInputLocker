@@ -3,11 +3,19 @@
 AudioInputLocker is a local macOS menu bar utility. It does not include
 analytics, accounts, network calls, or telemetry.
 
+## Supported Versions
+
+The project does not have packaged releases yet. Security fixes are handled on
+the `main` branch until versioned releases begin.
+
 ## Reporting A Vulnerability
 
 Please do not open a public issue for a security-sensitive report. Instead,
 contact the maintainer privately after the repository is published, or use
 GitHub private vulnerability reporting if it is enabled for the repository.
+
+If private vulnerability reporting is not available, open a minimal public issue
+asking for a private contact path without including exploit details.
 
 Useful details to include:
 

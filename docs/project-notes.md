@@ -1,7 +1,7 @@
-# INIT 2026-05-20
+# Project Notes
 
-This document records the project context at the moment the app was moved to
-`~/Codes/AudioInputLocker` and initialized as a Git repository.
+This document records early project context from May 2026, when AudioInputLocker
+was moved into its current repository.
 
 ## Project
 
@@ -12,7 +12,8 @@ fills that gap with a Sound-style menu focused on input devices.
 
 The app is currently implemented as a SwiftUI macOS menu bar app:
 
-- `MenuBarExtra("Sound", systemImage: "music.microphone")`
+- `MenuBarExtra` with custom template menu bar icons for normal and locked
+  states.
 - Dock icon hidden through `LSUIElement = true`
 - Core Audio is used for device enumeration, default input switching, input
   volume reading/writing, and device-change monitoring.
@@ -95,9 +96,8 @@ adjustments where screenshots showed a clear mismatch.
 ## Icon Mapping
 
 The menu device-list icons use a device-to-SF-Symbol mapping informed by
-Core Audio device metadata and open-source reference research. The HUD no longer
-uses the device icon mapping; it always shows a custom product-like
-`music.microphone`-inspired microphone glyph.
+Core Audio device metadata and open-source reference research. The HUD uses the
+`AudioInputLocker/HUDMicrophone.png` asset instead of the device icon mapping.
 
 ## Liquid Glass Notes
 

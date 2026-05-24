@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest an improvement for AudioInputLocker.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea. Please describe the workflow you want to improve.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or workflow
+      placeholder: What is difficult, missing, or repetitive today?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggested solution
+      placeholder: What should AudioInputLocker do differently?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Mention relevant devices, macOS versions, screenshots, or similar apps.

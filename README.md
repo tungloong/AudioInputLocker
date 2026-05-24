@@ -14,6 +14,16 @@ menu for microphones and other input devices. AudioInputLocker fills that gap
 with a Sound-style input menu, plus a lock mode that keeps your preferred input
 device selected when macOS or another app tries to switch it away.
 
+## Status
+
+AudioInputLocker is early open-source software. The source is available under
+the MIT License, but there is not a signed public download yet. For now, build
+and run it from source.
+
+Mac App Store and notarized direct distribution are being prepared. The main
+technical validation still needed for the App Store path is confirming that App
+Sandbox does not block the Core Audio device-switching behavior on real Macs.
+
 ## Features
 
 - Menu bar extra with a native macOS Sound-style popover.
@@ -37,7 +47,14 @@ available and falls back on older systems.
 
 ## Build And Run
 
-Use the local helper script:
+Clone the repository:
+
+```sh
+git clone https://github.com/tungloong/AudioInputLocker.git
+cd AudioInputLocker
+```
+
+Then use the local helper script:
 
 ```sh
 ./scripts/build-and-run.sh
@@ -99,6 +116,10 @@ device itself.
 - `docs/app-store`: App Store metadata, privacy policy, and release checklist.
 - `docs/liquid-glass-investigation.md`: historical notes from HUD visual
   experiments.
+- `docs/project-notes.md`: early project context and implementation notes.
+- `CHANGELOG.md`: notable project changes.
+- `CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md`: community and
+  maintenance guidance.
 
 ## Implementation Notes
 
@@ -118,6 +139,10 @@ AudioInputLocker is built with SwiftUI, AppKit, and Core Audio.
 AudioInputLocker works locally on your Mac. It does not include analytics,
 network calls, accounts, or telemetry.
 
+The app stores only local preferences such as the locked input device identifier
+and display name. See `docs/app-store/privacy-policy.md` for the current privacy
+policy draft.
+
 ## Known Follow-Ups
 
 - Register the final explicit App ID and Apple Developer Team before archiving
@@ -133,8 +158,8 @@ network calls, accounts, or telemetry.
 ## Contributing
 
 Issues and pull requests are welcome. Please keep changes focused and preserve
-the native macOS feel of the menu and HUD. See `CONTRIBUTING.md` and
-`SECURITY.md` for project guidance.
+the native macOS feel of the menu and HUD. See `CONTRIBUTING.md`, `SUPPORT.md`,
+and `SECURITY.md` for project guidance.
 
 Useful checks before opening a pull request:
 

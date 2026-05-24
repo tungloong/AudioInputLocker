@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible problem with AudioInputLocker.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail to reproduce it on a Mac.
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "Example: macOS 26.0"
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Mac model
+      placeholder: "Example: MacBook Air M3"
+  - type: input
+    id: version
+    attributes:
+      label: App version or commit
+      placeholder: "Example: main @ fbea005"
+  - type: textarea
+    id: devices
+    attributes:
+      label: Audio devices involved
+      description: Include microphones, headsets, AirPods, USB interfaces, or virtual audio devices.
+      placeholder: "Example: MacBook Air Microphone, AirPods Pro, USB microphone"
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Launch AudioInputLocker.
+        2. Lock input device...
+        3. Switch device in System Settings...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra context
+      description: Screenshots, short recordings, Console logs, or build output can help.
