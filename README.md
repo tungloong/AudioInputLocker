@@ -94,7 +94,7 @@ device itself.
 - `AudioInputLocker/HUDMicrophone.png`: HUD microphone asset.
 - `AudioInputLocker/Assets.xcassets`: app icon and menu bar icon assets.
 - `scripts/build-and-run.sh`: local build and restart helper.
-- `docs/brand.md`: brand visuals and icon usage notes.
+- `docs/visual-assets.md`: icon assets and visual notes.
 - `docs/github-release.md`: GitHub repository setup notes.
 - `docs/app-store`: App Store metadata, privacy policy, and release checklist.
 - `docs/liquid-glass-investigation.md`: historical notes from HUD visual

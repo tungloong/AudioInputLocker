@@ -1,6 +1,6 @@
-# Brand Assets / 品牌视觉
+# Visual Assets / 视觉资源
 
-AudioInputLocker 的视觉方向是「安静、原生、可信赖」：它是一个常驻菜单栏的小工具，品牌需要在 App Store 图标里有辨识度，同时在菜单栏里保持克制。
+这里记录 AudioInputLocker 目前用到的几项视觉资源：App 图标、菜单栏图标和后续截图素材的基本方向。它只是一个常驻菜单栏的小 app，所以视觉目标是安静、原生、清楚，不需要做成一套很重的设计手册。
 
 ## App Icon
 
@@ -8,15 +8,15 @@ AudioInputLocker 的视觉方向是「安静、原生、可信赖」：它是一
 
 图标概念是麦克风和锁的组合：麦克风代表系统输入设备，锁代表锁定并恢复偏好的默认输入。当前方向是白色玻璃底、白灰/珍珠色麦克风、暖古铜锁头，参考 macOS 26 Liquid Glass 系统图标的分层、霜化、透光边缘和克制高光，但刻意避免蓝色大底、强彩色渐变和旧式重拟物。App Icon 里的锁头允许和麦克风轻微重叠，并保留锁孔细节来增加可读性。
 
-Asset paths:
+Files:
 
 - `docs/assets/audio-input-locker-app-icon.png`: 1024px master for README, store copy, and future exports.
 - `AudioInputLocker/Assets.xcassets/AppIcon.appiconset`: compiled macOS app icon sizes.
 
-Source prompt:
+Generation prompt:
 
 ```text
-Use case: logo-brand
+Use case: macOS app icon
 Asset type: macOS app icon, square 1024x1024
 Primary request: Create a refined macOS 26 / Liquid Glass style app icon for AudioInputLocker, a small macOS menu bar utility that locks the selected microphone input device.
 Design direction: Native Apple system-app quality, quiet and premium, closer to macOS Tahoe / Liquid Glass than older skeuomorphic macOS icons. Use layered translucent glass, frostiness, lensing-like edge highlights, subtle specular highlights, gentle depth, and generous breathing room. Avoid heavy bevels, old metallic chrome, dark glossy badges, busy realism, and dated 2010-era gradients.
@@ -31,7 +31,7 @@ Readability: Strong at small sizes, frontal not angled, simple silhouette, no mu
 
 菜单栏图标使用自定义 template image，而不是 SF Symbol。它有两种状态：普通状态只显示直立麦克风；锁定生效状态显示同一麦克风加右下角锁头。普通态的麦克风轴线对齐 18pt 画布中心；锁定态会切掉麦克风右下角，并在锁钩顶部额外留出透明避让区，为无锁孔的低矮锁身和倒 U 形锁钩留出独立空间。两套图标都只使用 alpha mask，让 macOS 自动处理浅色/深色菜单栏、选中态和高对比度显示。
 
-Asset paths:
+Files:
 
 - `AudioInputLocker/Assets.xcassets/MenuBarIcon.imageset`: unlocked 18px, 36px, and 54px template PNGs.
 - `AudioInputLocker/Assets.xcassets/MenuBarIconLocked.imageset`: locked 18px, 36px, and 54px template PNGs.
@@ -40,7 +40,7 @@ Asset paths:
 - `docs/assets/audio-input-locker-menu-bar-icon-template.png`: larger transparent unlocked preview.
 - `docs/assets/audio-input-locker-menu-bar-icon-locked-template.png`: larger transparent locked preview.
 
-## Palette
+## Colors
 
 - Warm White: `#F7F4EE` for the primary app icon surface.
 - Soft Gray: `#D7D4CD` for microphone shadow and depth.
@@ -49,14 +49,14 @@ Asset paths:
 - Frost: `#F8F8F6` for light backgrounds and App Store support art.
 - Ink: `#1F2328` for documentation text and monochrome previews.
 
-## Usage Rules
+## Notes
 
-- Do use `MenuBarIcon` for the normal menu bar state and `MenuBarIconLocked` only when the lock is actively holding the current input device.
-- Do keep the menu bar icon monochrome/template; do not ship a colored menu bar icon.
-- Do keep the menu bar icon microphone-first, and keep the lock badge attached to the lower-right.
-- Do avoid music-note-only symbols: the product is about audio input control, not music playback.
-- Do keep app icon exports text-free so they remain legible at small sizes and App Store-safe.
-- Do keep screenshots and store graphics quiet and native, with the menu popover and HUD as first-class visuals.
+- Use `MenuBarIcon` for the normal menu bar state and `MenuBarIconLocked` only when the lock is actively holding the current input device.
+- Keep the menu bar icon monochrome/template so macOS can handle light mode, dark mode, selected state, and high contrast.
+- Keep the menu bar icon microphone-first, with the lock badge attached to the lower-right.
+- Avoid music-note-only symbols: the app is about audio input control, not music playback.
+- Keep app icon exports text-free so they remain legible at small sizes and App Store-safe.
+- Keep screenshots and store graphics quiet and native, with the menu popover and HUD as the main visuals.
 
 ## References
 
