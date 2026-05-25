@@ -2,6 +2,9 @@
 
 Thanks for helping improve AudioInputLocker.
 
+Please keep discussion respectful and practical. See `CODE_OF_CONDUCT.md` for
+the short project conduct note.
+
 ## Development Setup
 
 Requirements:

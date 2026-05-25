@@ -14,8 +14,8 @@
 
 - Confirm `main` builds with `./scripts/build-and-run.sh`.
 - Confirm `README.md` and `README_CN.md` link to each other.
-- Confirm `LICENSE`, `CONTRIBUTING.md`, `SUPPORT.md`, `SECURITY.md`, and
-  `CHANGELOG.md` are present.
+- Confirm `LICENSE`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SUPPORT.md`,
+  `SECURITY.md`, and `CHANGELOG.md` are present.
 - Confirm GitHub issue templates and pull request template are present.
 - Confirm README includes menu popover and restore HUD screenshots.
 - Confirm GitHub Actions build is green.

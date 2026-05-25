@@ -126,7 +126,7 @@ App 当前包含：
 - `docs/liquid-glass-investigation.md`：HUD 视觉实验的历史记录。
 - `docs/project-notes.md`：早期项目背景和实现笔记。
 - `CHANGELOG.md`：项目重要变更记录。
-- `CONTRIBUTING.md`、`SUPPORT.md` 和 `SECURITY.md`：贡献、支持和安全说明。
+- `CODE_OF_CONDUCT.md`、`CONTRIBUTING.md`、`SUPPORT.md` 和 `SECURITY.md`：社区、贡献、支持和安全说明。
 
 ## 实现说明
 
@@ -175,7 +175,7 @@ app 不录音，因此正常情况下不需要请求麦克风录制权限。
 
 ## 贡献
 
-欢迎 issue 和 pull request。请保持改动聚焦，并尽量保留菜单和 HUD 的原生 macOS 质感。项目约定见 `CONTRIBUTING.md`、`SUPPORT.md` 和 `SECURITY.md`。
+欢迎 issue 和 pull request。请保持改动聚焦，并尽量保留菜单和 HUD 的原生 macOS 质感。项目约定见 `CODE_OF_CONDUCT.md`、`CONTRIBUTING.md`、`SUPPORT.md` 和 `SECURITY.md`。
 
 提交 pull request 前，建议先运行：
 

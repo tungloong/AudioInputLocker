@@ -143,7 +143,7 @@ device itself.
   experiments.
 - `docs/project-notes.md`: early project context and implementation notes.
 - `CHANGELOG.md`: notable project changes.
-- `CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md`: community and
+- `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md`: community and
   maintenance guidance.
 
 ## Implementation Notes
@@ -203,8 +203,8 @@ More notes are in `docs/troubleshooting.md`.
 ## Contributing
 
 Issues and pull requests are welcome. Please keep changes focused and preserve
-the native macOS feel of the menu and HUD. See `CONTRIBUTING.md`, `SUPPORT.md`,
-and `SECURITY.md` for project guidance.
+the native macOS feel of the menu and HUD. See `CODE_OF_CONDUCT.md`,
+`CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md` for project guidance.
 
 Useful checks before opening a pull request:
 
