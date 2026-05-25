@@ -228,73 +228,96 @@
       }
 
       .scenario-shell {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.42fr) minmax(0, 1fr);
+        gap: 0;
         border: 1px solid var(--line);
-        border-radius: 28px;
-        background:
-          linear-gradient(180deg, rgba(250, 251, 249, 0.86), rgba(255, 255, 255, 0.98)),
-          #fff;
+        border-radius: 18px;
+        background: #fff;
         box-shadow: 0 22px 80px rgba(27, 31, 35, 0.08);
         overflow: hidden;
       }
 
-      .scenario-tabs {
-        display: flex;
-        flex-wrap: wrap;
+      .scenario-picker {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        padding: 18px;
+        border-right: 1px solid var(--line);
+        background: #fafbf8;
+      }
+
+      .scenario-card {
+        display: grid;
         gap: 8px;
         padding: 16px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .scenario-tab {
-        min-height: 38px;
-        padding: 0 14px;
-        border: 1px solid transparent;
-        border-radius: 999px;
-        background: transparent;
-        color: var(--muted);
-        font: inherit;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-
-      .scenario-tab[aria-selected="true"] {
-        border-color: rgba(36, 120, 242, 0.24);
-        background: var(--blue-soft);
-        color: #155fc2;
-      }
-
-      .scenario-stage {
-        display: grid;
-        grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.65fr);
-        gap: 28px;
-        align-items: stretch;
-        min-height: 470px;
-        padding: clamp(18px, 4vw, 38px);
-      }
-
-      .lock-animation {
-        position: relative;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        min-height: 390px;
-        overflow: hidden;
         border: 1px solid rgba(23, 24, 26, 0.10);
-        border-radius: 24px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 248, 251, 0.92)),
-          #f8fafc;
+        border-radius: var(--radius);
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition:
+          background-color 180ms ease,
+          border-color 180ms ease,
+          box-shadow 180ms ease,
+          transform 180ms ease;
       }
 
-      .menu-strip {
+      .scenario-card:hover {
+        transform: translateY(-1px);
+      }
+
+      .scenario-card[aria-pressed="true"] {
+        border-color: rgba(36, 120, 242, 0.38);
+        background: var(--blue-soft);
+        box-shadow: 0 14px 32px rgba(36, 120, 242, 0.10);
+      }
+
+      .scenario-card .card-kicker {
+        color: var(--bronze);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .scenario-card strong {
+        font-size: 18px;
+      }
+
+      .scenario-card span:last-child {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .lock-demo {
+        display: grid;
+        gap: 22px;
+        padding: clamp(18px, 4vw, 34px);
+        background:
+          linear-gradient(180deg, rgba(248, 250, 252, 0.94), rgba(255, 255, 255, 0.98)),
+          #fff;
+      }
+
+      .demo-menubar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 14px;
+        min-height: 46px;
+        padding: 0 14px;
+        border: 1px solid rgba(23, 24, 26, 0.10);
+        border-radius: var(--radius);
+        background: rgba(235, 240, 246, 0.78);
+      }
+
+      .menubar-dots,
+      .menubar-icons {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
         gap: 10px;
-        height: 46px;
-        padding: 0 18px;
-        border-bottom: 1px solid rgba(23, 24, 26, 0.08);
-        background: rgba(232, 239, 247, 0.72);
       }
 
       .menu-dot {
@@ -304,67 +327,122 @@
         background: rgba(22, 23, 24, 0.26);
       }
 
-      .menu-icon {
+      .menubar-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 5px;
+        background: rgba(23, 24, 26, 0.18);
+      }
+
+      .menubar-icon.locked {
         position: relative;
-        width: 34px;
-        height: 24px;
         border-radius: 999px;
         background: rgba(36, 120, 242, 0.14);
       }
 
-      .menu-icon::before {
+      .menubar-icon.locked::before {
         position: absolute;
-        inset: 5px 11px;
+        left: 6px;
+        top: 4px;
+        width: 6px;
+        height: 8px;
         content: "";
         border: 2px solid var(--blue);
-        border-top-width: 5px;
-        border-radius: 8px;
+        border-top-width: 4px;
+        border-radius: 6px;
       }
 
-      .device-stack {
-        position: relative;
+      .route-summary {
         display: grid;
-        gap: 14px;
-        align-content: center;
-        padding: 30px;
-      }
-
-      .device-row {
-        position: relative;
-        display: grid;
-        grid-template-columns: 48px 1fr auto;
-        gap: 14px;
-        align-items: center;
-        min-height: 74px;
-        padding: 12px 16px;
+        gap: 8px;
+        min-height: 132px;
+        padding: 22px;
         border: 1px solid rgba(23, 24, 26, 0.10);
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.74);
-        transition:
-          border-color 360ms ease,
-          box-shadow 360ms ease,
-          transform 360ms ease,
-          background-color 360ms ease;
+        border-radius: var(--radius);
+        background: #fff;
       }
 
-      .device-row strong,
-      .device-row span {
-        display: block;
-      }
-
-      .device-row .label {
-        margin-bottom: 3px;
+      .route-label {
         color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 13px;
+        font-weight: 800;
         text-transform: uppercase;
       }
 
-      .device-row strong {
-        font-size: clamp(16px, 2vw, 20px);
+      .route-summary strong {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.05;
       }
 
-      .device-avatar {
+      .route-summary p {
+        max-width: 680px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      .route-flow {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr) 34px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+      }
+
+      .route-node {
+        display: grid;
+        gap: 12px;
+        min-height: 176px;
+        padding: 18px;
+        border: 1px solid rgba(23, 24, 26, 0.10);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.76);
+        transition:
+          background-color 220ms ease,
+          border-color 220ms ease,
+          box-shadow 220ms ease,
+          transform 220ms ease;
+      }
+
+      .route-node.is-active {
+        border-color: rgba(36, 120, 242, 0.34);
+        background: #f8fbff;
+        box-shadow: 0 16px 42px rgba(36, 120, 242, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .route-node.interrupt.is-active {
+        border-color: rgba(168, 117, 72, 0.36);
+        background: #fffaf4;
+        box-shadow: 0 16px 42px rgba(168, 117, 72, 0.12);
+      }
+
+      .route-node.restored.is-active {
+        border-color: rgba(47, 141, 92, 0.32);
+        background: var(--green-soft);
+        box-shadow: 0 16px 42px rgba(47, 141, 92, 0.12);
+      }
+
+      .node-eyebrow {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .route-node strong {
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      .route-node p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .route-icon {
         position: relative;
         width: 48px;
         height: 48px;
@@ -372,13 +450,13 @@
         background: #edf0f2;
       }
 
-      .device-avatar::before,
-      .device-avatar::after {
+      .route-icon::before,
+      .route-icon::after {
         position: absolute;
         content: "";
       }
 
-      .avatar-mic::before {
+      .route-icon.mic::before {
         left: 18px;
         top: 9px;
         width: 12px;
@@ -387,7 +465,7 @@
         background: var(--blue);
       }
 
-      .avatar-mic::after {
+      .route-icon.mic::after {
         left: 14px;
         top: 27px;
         width: 20px;
@@ -397,8 +475,8 @@
         border-radius: 0 0 12px 12px;
       }
 
-      .avatar-airpods::before,
-      .avatar-airpods::after {
+      .route-icon.airpods::before,
+      .route-icon.airpods::after {
         top: 13px;
         width: 10px;
         height: 20px;
@@ -406,15 +484,15 @@
         border-radius: 10px 10px 8px 8px;
       }
 
-      .avatar-airpods::before {
+      .route-icon.airpods::before {
         left: 12px;
       }
 
-      .avatar-airpods::after {
+      .route-icon.airpods::after {
         right: 12px;
       }
 
-      .avatar-laptop::before {
+      .route-icon.laptop::before {
         left: 10px;
         top: 14px;
         width: 28px;
@@ -423,7 +501,7 @@
         border-radius: 3px 3px 1px 1px;
       }
 
-      .avatar-laptop::after {
+      .route-icon.laptop::after {
         left: 6px;
         top: 34px;
         width: 36px;
@@ -432,142 +510,108 @@
         background: #717980;
       }
 
-      .status-pill {
-        display: inline-flex;
-        align-items: center;
-        min-height: 30px;
-        padding: 0 10px;
-        border-radius: 999px;
-        background: #edf0f2;
-        color: var(--muted);
-        font-size: 12px;
+      .route-arrow {
+        color: rgba(23, 24, 26, 0.24);
+        font-size: 28px;
         font-weight: 800;
+        text-align: center;
       }
 
-      .device-row.preferred .status-pill {
-        background: var(--bronze-soft);
-        color: #85542d;
-      }
-
-      .lock-animation[data-phase="locked"] .device-row.preferred,
-      .lock-animation[data-phase="restored"] .device-row.preferred {
-        border-color: rgba(36, 120, 242, 0.34);
-        background: #f8fbff;
-        box-shadow: 0 16px 42px rgba(36, 120, 242, 0.12);
-        transform: translateX(6px);
-      }
-
-      .lock-animation[data-phase="stolen"] .device-row.interrupt {
-        border-color: rgba(168, 117, 72, 0.34);
-        background: #fffaf4;
-        box-shadow: 0 16px 42px rgba(168, 117, 72, 0.12);
-        transform: translateX(6px);
-      }
-
-      .restore-line {
-        position: absolute;
-        left: 56px;
-        right: 56px;
-        top: 50%;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--blue), transparent);
-        opacity: 0;
-        transform: translateY(-50%) scaleX(0.55);
-      }
-
-      .lock-animation[data-phase="restored"] .restore-line {
-        animation: restorePulse 900ms ease forwards;
-      }
-
-      @keyframes restorePulse {
-        0% {
-          opacity: 0;
-          transform: translateY(-50%) scaleX(0.40);
-        }
-        38% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-          transform: translateY(-50%) scaleX(1);
-        }
-      }
-
-      .hud-pill {
-        justify-self: center;
+      .phase-controls {
         display: grid;
-        grid-template-columns: 38px auto;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .phase-button,
+      .replay-button {
+        min-height: 42px;
+        padding: 0 14px;
+        border: 1px solid rgba(23, 24, 26, 0.12);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .phase-button[aria-pressed="true"] {
+        border-color: rgba(36, 120, 242, 0.34);
+        background: var(--blue-soft);
+        color: #155fc2;
+      }
+
+      .replay-button {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .restore-hud {
+        display: grid;
+        grid-template-columns: 36px auto;
         gap: 12px;
         align-items: center;
-        min-width: 250px;
-        margin-bottom: 24px;
-        padding: 10px 18px;
-        border: 1px solid rgba(255, 255, 255, 0.66);
+        justify-self: start;
+        min-height: 58px;
+        padding: 10px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.74);
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.78);
         box-shadow: 0 18px 46px rgba(28, 31, 34, 0.14);
         opacity: 0.42;
-        transform: translateY(10px);
+        transform: translateY(4px);
         transition:
-          opacity 360ms ease,
-          transform 360ms ease;
+          opacity 220ms ease,
+          transform 220ms ease;
       }
 
-      .lock-animation[data-phase="restored"] .hud-pill {
+      .lock-demo[data-phase="restored"] .restore-hud {
         opacity: 1;
         transform: translateY(0);
       }
 
-      .hud-icon {
-        width: 38px;
-        height: 38px;
+      .restore-hud-icon {
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
-        background: var(--blue);
+        background: var(--green);
       }
 
-      .hud-pill strong {
+      .restore-hud strong,
+      .restore-hud span {
         display: block;
-        font-size: 14px;
       }
 
-      .hud-pill span {
+      .restore-hud span {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 13px;
       }
 
-      .scenario-copy {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: clamp(6px, 2vw, 18px);
+      .scenario-explainer {
+        display: grid;
+        gap: 10px;
+        padding: 0 2px;
+      }
+
+      .scenario-explainer p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      .scenario-explainer strong {
+        color: var(--ink);
       }
 
       .scenario-kicker {
-        margin-bottom: 14px;
         color: var(--bronze);
         font-size: 13px;
         font-weight: 800;
         text-transform: uppercase;
-      }
-
-      .scenario-title {
-        margin-bottom: 16px;
-        font-size: clamp(28px, 4vw, 44px);
-        line-height: 1.08;
-      }
-
-      .scenario-detail,
-      .phase-text {
-        color: var(--muted);
-        font-size: 17px;
-        line-height: 1.58;
-      }
-
-      .phase-text {
-        min-height: 58px;
-        margin-top: 22px;
-        padding-left: 16px;
-        border-left: 3px solid var(--blue);
       }
 
       .feature-grid {
@@ -692,9 +736,26 @@
         }
 
         .section-heading,
-        .scenario-stage,
         .download-row {
           grid-template-columns: 1fr;
+        }
+
+        .scenario-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .scenario-picker {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .route-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .route-arrow {
+          transform: rotate(90deg);
         }
 
         .feature-grid {
@@ -719,33 +780,33 @@
         }
 
         .scenario-shell {
-          border-radius: 18px;
+          border-radius: 14px;
         }
 
-        .scenario-stage {
+        .scenario-picker {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+
+        .lock-demo {
           padding: 14px;
         }
 
-        .lock-animation {
-          min-height: 460px;
-        }
-
-        .device-stack {
+        .route-summary {
+          min-height: 0;
           padding: 18px;
         }
 
-        .device-row {
-          grid-template-columns: 42px 1fr;
+        .route-summary strong {
+          font-size: 30px;
         }
 
-        .device-avatar {
-          width: 42px;
-          height: 42px;
+        .phase-controls {
+          grid-template-columns: 1fr;
         }
 
-        .status-pill {
-          grid-column: 2;
-          width: max-content;
+        .replay-button {
+          width: 100%;
         }
 
         .screenshot-grid {
@@ -816,81 +877,107 @@
       <section class="section scenario" id="how" aria-labelledby="how-title">
         <div class="section-inner">
           <div class="section-heading">
-            <h2 id="how-title">What lock mode does.</h2>
+            <h2 id="how-title">Lock mode in action.</h2>
             <p>
-              The app watches the Core Audio default input route. When something
-              changes it, lock mode restores your chosen device and shows a
-              short confirmation HUD.
+              Pick a real-world interruption, then step through what happens:
+              the system input changes, AudioInputLocker catches it, and the
+              locked microphone becomes active again.
             </p>
           </div>
 
-          <div class="scenario-shell" id="scenario-shell">
-            <div class="scenario-tabs" role="tablist" aria-label="Lock mode scenarios">
-              <button class="scenario-tab" type="button" data-scenario="airpods" aria-selected="true">
-                AirPods auto-switch
+          <div class="scenario-shell" id="lock-simulator" data-scenario="airpods">
+            <div class="scenario-picker" aria-label="Choose a lock mode scenario">
+              <button class="scenario-card" type="button" data-scenario="airpods" aria-pressed="true">
+                <span class="card-kicker">Most common</span>
+                <strong>AirPods takes over</strong>
+                <span>Keep AirPods for listening while your real microphone stays active.</span>
               </button>
-              <button class="scenario-tab" type="button" data-scenario="settings" aria-selected="false">
-                System Settings
+              <button class="scenario-card" type="button" data-scenario="settings" aria-pressed="false">
+                <span class="card-kicker">Manual change</span>
+                <strong>System Settings changes input</strong>
+                <span>When macOS or another app changes the route, the lock remains the source of truth.</span>
               </button>
-              <button class="scenario-tab" type="button" data-scenario="reconnect" aria-selected="false">
-                USB reconnect
+              <button class="scenario-card" type="button" data-scenario="reconnect" aria-pressed="false">
+                <span class="card-kicker">Desk setup</span>
+                <strong>A USB mic reconnects</strong>
+                <span>Remember the locked device even when gear disappears and comes back.</span>
               </button>
             </div>
 
-            <div class="scenario-stage">
-              <div class="lock-animation" data-phase="locked" aria-label="Animated lock mode explanation">
-                <div class="menu-strip" aria-hidden="true">
+            <div class="lock-demo" data-phase="locked" aria-label="Interactive lock mode simulator">
+              <div class="demo-menubar" aria-hidden="true">
+                <span class="menubar-dots">
                   <span class="menu-dot"></span>
                   <span class="menu-dot"></span>
-                  <span class="menu-icon"></span>
-                </div>
-
-                <div class="device-stack">
-                  <div class="restore-line" aria-hidden="true"></div>
-                  <div class="device-row preferred">
-                    <span class="device-avatar avatar-mic" aria-hidden="true"></span>
-                    <span>
-                      <span class="label">Locked input</span>
-                      <strong data-preferred-device>Wireless Mic Rx</strong>
-                    </span>
-                    <span class="status-pill">Locked</span>
-                  </div>
-                  <div class="device-row interrupt">
-                    <span class="device-avatar avatar-airpods" data-interrupt-avatar aria-hidden="true"></span>
-                    <span>
-                      <span class="label" data-interrupt-label>macOS switches to</span>
-                      <strong data-interrupt-device>AirPods</strong>
-                    </span>
-                    <span class="status-pill">Tried</span>
-                  </div>
-                  <div class="device-row fallback">
-                    <span class="device-avatar avatar-laptop" aria-hidden="true"></span>
-                    <span>
-                      <span class="label">Available input</span>
-                      <strong>MacBook Air Microphone</strong>
-                    </span>
-                    <span class="status-pill">Ready</span>
-                  </div>
-                </div>
-
-                <div class="hud-pill">
-                  <span class="hud-icon" aria-hidden="true"></span>
-                  <span>
-                    <strong>Input restored</strong>
-                    <span data-hud-device>Wireless Mic Rx</span>
-                  </span>
-                </div>
+                  <span class="menu-dot"></span>
+                </span>
+                <span class="menubar-icons">
+                  <span class="menubar-icon"></span>
+                  <span class="menubar-icon locked"></span>
+                  <span class="menubar-icon"></span>
+                </span>
               </div>
 
-              <div class="scenario-copy">
-                <p class="scenario-kicker" data-scenario-kicker>Typical case</p>
-                <h3 class="scenario-title" data-scenario-title>AirPods grabs the input device.</h3>
-                <p class="scenario-detail" data-scenario-detail>
-                  You can keep listening through AirPods while the Mac stays on
-                  the microphone you picked for calls, recordings, or streaming.
+              <div class="route-summary" aria-live="polite">
+                <span class="route-label">Current system input</span>
+                <strong data-current-input>Wireless Mic Rx</strong>
+                <p data-current-detail>
+                  Lock mode is enabled. AudioInputLocker watches the default input route.
                 </p>
-                <p class="phase-text" data-phase-text>
-                  Step 1: lock your preferred input device.
+              </div>
+
+              <div class="route-flow">
+                <article class="route-node locked is-active" data-node="locked">
+                  <span class="route-icon mic" aria-hidden="true"></span>
+                  <span class="node-eyebrow">1. Locked</span>
+                  <strong>Wireless Mic Rx</strong>
+                  <p>Your preferred microphone is saved locally as the device to keep active.</p>
+                </article>
+                <div class="route-arrow" aria-hidden="true">-&gt;</div>
+                <article class="route-node interrupt" data-node="interrupted">
+                  <span class="route-icon airpods" data-event-icon aria-hidden="true"></span>
+                  <span class="node-eyebrow">2. Route changes</span>
+                  <strong data-event-device>AirPods</strong>
+                  <p data-event-copy>macOS tries to switch the input to AirPods.</p>
+                </article>
+                <div class="route-arrow" aria-hidden="true">-&gt;</div>
+                <article class="route-node restored" data-node="restored">
+                  <span class="route-icon mic" aria-hidden="true"></span>
+                  <span class="node-eyebrow">3. Restored</span>
+                  <strong>Wireless Mic Rx</strong>
+                  <p>AudioInputLocker switches the default input back and shows a short HUD.</p>
+                </article>
+              </div>
+
+              <div class="phase-controls" aria-label="Step through lock mode">
+                <button class="phase-button" type="button" data-phase="locked" aria-pressed="true">
+                  1 Locked
+                </button>
+                <button class="phase-button" type="button" data-phase="interrupted" aria-pressed="false">
+                  2 Route changes
+                </button>
+                <button class="phase-button" type="button" data-phase="restored" aria-pressed="false">
+                  3 Restored
+                </button>
+                <button class="replay-button" type="button" data-replay>
+                  Replay
+                </button>
+              </div>
+
+              <div class="restore-hud" aria-hidden="true">
+                <span class="restore-hud-icon"></span>
+                <span>
+                  <strong>Input restored</strong>
+                  <span>Wireless Mic Rx</span>
+                </span>
+              </div>
+
+              <div class="scenario-explainer">
+                <span class="scenario-kicker" data-scenario-kicker>Most common</span>
+                <p data-scenario-detail>
+                  AirPods can become the default microphone when they connect or
+                  move between Apple devices. Lock mode keeps your selected mic
+                  in place without changing what you listen through.
                 </p>
               </div>
             </div>
@@ -993,122 +1080,136 @@
     </footer>
 
     <script>
-      const scenarioCopy = {
+      const lockScenarios = {
         airpods: {
-          kicker: "Typical case",
-          title: "AirPods grabs the input device.",
+          kicker: "Most common",
+          eventDevice: "AirPods",
+          eventIcon: "airpods",
+          eventCopy: "macOS tries to switch the input to AirPods.",
           detail:
-            "You can keep listening through AirPods while the Mac stays on the microphone you picked for calls, recordings, or streaming.",
-          interruptLabel: "macOS switches to",
-          interruptDevice: "AirPods",
-          interruptAvatar: "avatar-airpods",
-          phases: [
-            "Step 1: lock your preferred input device.",
-            "Step 2: AirPods auto-switching tries to become the default input.",
-            "Step 3: AudioInputLocker restores the locked microphone and shows the HUD."
-          ]
+            "AirPods can become the default microphone when they connect or move between Apple devices. Lock mode keeps your selected mic in place without changing what you listen through.",
+          phaseCopy: {
+            locked:
+              "Lock mode is enabled. AudioInputLocker watches the default input route.",
+            interrupted:
+              "AirPods just became the system input. This is the surprise switch lock mode is designed to catch.",
+            restored:
+              "AudioInputLocker changes the default input back to Wireless Mic Rx and shows a short restore HUD."
+          }
         },
         settings: {
-          kicker: "Manual changes",
-          title: "System Settings changes the route.",
+          kicker: "Manual change",
+          eventDevice: "MacBook Air Microphone",
+          eventIcon: "laptop",
+          eventCopy: "System Settings selects the built-in microphone.",
           detail:
-            "If the input device changes elsewhere in macOS, the app keeps your selected lock target as the source of truth.",
-          interruptLabel: "System Settings picks",
-          interruptDevice: "MacBook Air Microphone",
-          interruptAvatar: "avatar-laptop",
-          phases: [
-            "Step 1: the lock target is saved locally.",
-            "Step 2: System Settings selects another input route.",
-            "Step 3: the locked device is restored automatically."
-          ]
+            "If System Settings, a meeting app, or another utility changes the input route, the locked device remains the source of truth.",
+          phaseCopy: {
+            locked:
+              "Wireless Mic Rx is saved as the locked input device.",
+            interrupted:
+              "System Settings changes the default input to MacBook Air Microphone.",
+            restored:
+              "The app restores Wireless Mic Rx so your call or recording keeps using the intended microphone."
+          }
         },
         reconnect: {
           kicker: "Desk setup",
-          title: "A USB microphone disconnects and returns.",
+          eventDevice: "USB microphone reconnects",
+          eventIcon: "mic",
+          eventCopy: "A desk microphone disappears and then comes back online.",
           detail:
-            "The locked device remains visible while offline, so reconnecting a mic or receiver does not erase your intent.",
-          interruptLabel: "Reconnects as",
-          interruptDevice: "USB Microphone",
-          interruptAvatar: "avatar-mic",
-          phases: [
-            "Step 1: lock mode remembers the preferred device.",
-            "Step 2: the device disappears and later reconnects.",
-            "Step 3: when available again, it can be restored as the active input."
-          ]
+            "Lock mode keeps the offline locked device visible, so reconnecting a receiver or USB mic does not erase your intent.",
+          phaseCopy: {
+            locked:
+              "The preferred microphone is remembered locally on this Mac.",
+            interrupted:
+              "The device disconnects or reconnects, and macOS may briefly choose another route.",
+            restored:
+              "When the locked device is available again, AudioInputLocker can make it the active input."
+          }
         }
       };
 
-      const shell = document.querySelector("#scenario-shell");
-      const animation = document.querySelector(".lock-animation");
-      const tabs = Array.from(document.querySelectorAll(".scenario-tab"));
+      const simulator = document.querySelector("#lock-simulator");
+      const demo = document.querySelector(".lock-demo");
+      const scenarioButtons = Array.from(document.querySelectorAll(".scenario-card"));
+      const phaseButtons = Array.from(document.querySelectorAll(".phase-button"));
+      const replayButton = document.querySelector("[data-replay]");
+      const nodes = Array.from(document.querySelectorAll(".route-node"));
       const fields = {
-        kicker: document.querySelector("[data-scenario-kicker]"),
-        title: document.querySelector("[data-scenario-title]"),
-        detail: document.querySelector("[data-scenario-detail]"),
-        phase: document.querySelector("[data-phase-text]"),
-        interruptLabel: document.querySelector("[data-interrupt-label]"),
-        interruptDevice: document.querySelector("[data-interrupt-device]"),
-        interruptAvatar: document.querySelector("[data-interrupt-avatar]"),
-        hudDevice: document.querySelector("[data-hud-device]")
+        currentInput: document.querySelector("[data-current-input]"),
+        currentDetail: document.querySelector("[data-current-detail]"),
+        eventDevice: document.querySelector("[data-event-device]"),
+        eventCopy: document.querySelector("[data-event-copy]"),
+        eventIcon: document.querySelector("[data-event-icon]"),
+        scenarioKicker: document.querySelector("[data-scenario-kicker]"),
+        scenarioDetail: document.querySelector("[data-scenario-detail]")
       };
-      const phaseNames = ["locked", "stolen", "restored"];
-      const scenarioNames = Object.keys(scenarioCopy);
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let scenarioIndex = 0;
-      let phaseIndex = 0;
-      let pausedUntil = 0;
+      const phaseOrder = ["locked", "interrupted", "restored"];
+      let activeScenario = "airpods";
+      let activePhase = "locked";
+      let replayTimers = [];
 
-      function renderScenario(name) {
-        const copy = scenarioCopy[name];
-        shell.dataset.scenario = name;
-        fields.kicker.textContent = copy.kicker;
-        fields.title.textContent = copy.title;
-        fields.detail.textContent = copy.detail;
-        fields.interruptLabel.textContent = copy.interruptLabel;
-        fields.interruptDevice.textContent = copy.interruptDevice;
-        fields.interruptAvatar.className = "device-avatar " + copy.interruptAvatar;
-        fields.hudDevice.textContent = "Wireless Mic Rx";
-        fields.phase.textContent = copy.phases[phaseIndex];
-        tabs.forEach((tab) => {
-          tab.setAttribute("aria-selected", String(tab.dataset.scenario === name));
+      function clearReplay() {
+        replayTimers.forEach((timer) => window.clearTimeout(timer));
+        replayTimers = [];
+      }
+
+      function renderLockSimulator() {
+        const scene = lockScenarios[activeScenario];
+        simulator.dataset.scenario = activeScenario;
+        demo.dataset.phase = activePhase;
+
+        fields.eventDevice.textContent = scene.eventDevice;
+        fields.eventCopy.textContent = scene.eventCopy;
+        fields.eventIcon.className = "route-icon " + scene.eventIcon;
+        fields.scenarioKicker.textContent = scene.kicker;
+        fields.scenarioDetail.textContent = scene.detail;
+        fields.currentInput.textContent = activePhase === "interrupted" ? scene.eventDevice : "Wireless Mic Rx";
+        fields.currentDetail.textContent = scene.phaseCopy[activePhase];
+
+        scenarioButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.scenario === activeScenario));
+        });
+
+        phaseButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.phase === activePhase));
+        });
+
+        nodes.forEach((node) => {
+          node.classList.toggle("is-active", node.dataset.node === activePhase);
         });
       }
 
-      function renderPhase() {
-        const activeScenario = scenarioNames[scenarioIndex];
-        const copy = scenarioCopy[activeScenario];
-        animation.dataset.phase = phaseNames[phaseIndex];
-        fields.phase.textContent = copy.phases[phaseIndex];
-      }
-
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          scenarioIndex = scenarioNames.indexOf(tab.dataset.scenario);
-          phaseIndex = 0;
-          pausedUntil = Date.now() + 6000;
-          renderScenario(tab.dataset.scenario);
-          renderPhase();
+      scenarioButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          clearReplay();
+          activeScenario = button.dataset.scenario;
+          activePhase = "locked";
+          renderLockSimulator();
         });
       });
 
-      renderScenario("airpods");
-      renderPhase();
+      phaseButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          clearReplay();
+          activePhase = button.dataset.phase;
+          renderLockSimulator();
+        });
+      });
 
-      if (!prefersReducedMotion) {
-        window.setInterval(() => {
-          if (Date.now() < pausedUntil) {
-            return;
-          }
+      replayButton.addEventListener("click", () => {
+        clearReplay();
+        phaseOrder.forEach((phase, index) => {
+          replayTimers.push(window.setTimeout(() => {
+            activePhase = phase;
+            renderLockSimulator();
+          }, index * 850));
+        });
+      });
 
-          phaseIndex = (phaseIndex + 1) % phaseNames.length;
-          if (phaseIndex === 0) {
-            scenarioIndex = (scenarioIndex + 1) % scenarioNames.length;
-            renderScenario(scenarioNames[scenarioIndex]);
-          }
-
-          renderPhase();
-        }, 1900);
-      }
+      renderLockSimulator();
     </script>
   </body>
 </html>
