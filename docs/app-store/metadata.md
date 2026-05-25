@@ -24,7 +24,7 @@ AudioInputLocker works locally on your Mac and does not collect data.
 - Keywords: audio,input,microphone,menu bar,sound,AirPods,utility
 - Support URL: https://github.com/tungloong/AudioInputLocker/issues
 - Marketing URL: https://github.com/tungloong/AudioInputLocker
-- Privacy Policy URL: https://github.com/tungloong/AudioInputLocker/blob/main/docs/app-store/privacy-policy.md
+- Privacy Policy URL: https://tungloong.github.io/AudioInputLocker/privacy.html
 
 ## Simplified Chinese
 
@@ -43,7 +43,7 @@ AudioInputLocker 只在你的 Mac 本地工作，不收集数据。
 - Keywords: 音频,输入,麦克风,菜单栏,声音,AirPods,工具
 - Support URL: https://github.com/tungloong/AudioInputLocker/issues
 - Marketing URL: https://github.com/tungloong/AudioInputLocker
-- Privacy Policy URL: https://github.com/tungloong/AudioInputLocker/blob/main/docs/app-store/privacy-policy.md
+- Privacy Policy URL: https://tungloong.github.io/AudioInputLocker/privacy.html
 
 ## Screenshots
 

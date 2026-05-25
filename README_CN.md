@@ -4,17 +4,39 @@
   <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
 </p>
 
+<p align="center">
+  <a href="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml"><img src="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
+  <a href="https://github.com/tungloong/AudioInputLocker/releases/latest"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
+</p>
+
 [English](README.md) | [简体中文](README_CN.md)
 
 AudioInputLocker 是一个用于管理 macOS 系统默认音频输入设备的小型菜单栏 app。
 
 macOS 已经有一个原生风格的声音输出菜单，但没有一个同样顺手的麦克风和输入设备菜单。AudioInputLocker 补上了这块空白：它提供一个接近系统声音菜单的输入设备菜单，并加入锁定模式，在 macOS 或其他 app 尝试切走输入设备时，自动切回你偏好的设备。
 
+<p align="center">
+  <img src="docs/assets/screenshots/readme-preview.png" width="620" alt="AudioInputLocker 菜单弹窗和恢复 HUD 截图">
+</p>
+
 ## 当前状态
 
-AudioInputLocker 目前是早期开源项目。源码使用 MIT License 发布，但还没有提供已签名的公开下载包。当前请先从源码构建运行。
+AudioInputLocker 目前是早期开源项目。源码使用 MIT License 发布，GitHub Releases 中会提供 preview 构建。
 
 Mac App Store 和 notarized 直接分发都在准备中。App Store 路线还需要尽早在真机上确认：App Sandbox 不会阻断现有 Core Audio 设备切换行为。
+
+## 下载
+
+- [最新 GitHub Release](https://github.com/tungloong/AudioInputLocker/releases/latest)
+- 当前 preview 构建尚未 notarize，macOS 可能会显示 Gatekeeper 警告。
+- 如果你希望路径最透明，建议从源码构建运行。
+
+## 截图
+
+| 菜单弹窗 | 恢复 HUD |
+| --- | --- |
+| <img src="docs/assets/screenshots/menu-popover.png" width="360" alt="AudioInputLocker 菜单弹窗"> | <img src="docs/assets/screenshots/restore-hud.png" width="360" alt="AudioInputLocker 恢复 HUD"> |
 
 ## 功能
 
@@ -94,9 +116,12 @@ App 当前包含：
 - `AudioInputLocker/HUDMicrophone.png`：HUD 麦克风资源。
 - `AudioInputLocker/Assets.xcassets`：app 图标和菜单栏图标资源目录。
 - `scripts/build-and-run.sh`：本地构建和重启辅助脚本。
+- `scripts/package-preview-release.sh`：本地 preview release 打包辅助脚本。
 - `docs/visual-assets.md`：图标资源和视觉说明。
+- `docs/troubleshooting.md`：FAQ 和故障排查说明。
 - `docs/github-release.md`：GitHub 仓库设置说明。
 - `docs/app-store`：App Store metadata、隐私政策和发布检查清单。
+- `docs/releases`：GitHub Releases 使用的发布说明。
 - `docs/liquid-glass-investigation.md`：HUD 视觉实验的历史记录。
 - `docs/project-notes.md`：早期项目背景和实现笔记。
 - `CHANGELOG.md`：项目重要变更记录。
@@ -117,17 +142,35 @@ AudioInputLocker 使用 SwiftUI、AppKit 和 Core Audio 构建。
 
 AudioInputLocker 只在你的 Mac 本地工作。它不包含分析统计、网络请求、账号系统或遥测。
 
-app 只保存锁定输入设备的本地偏好，例如设备标识符和显示名称。当前隐私政策草稿见 `docs/app-store/privacy-policy.md`。
+app 只保存锁定输入设备的本地偏好，例如设备标识符和显示名称。公开隐私政策见
+[tungloong.github.io/AudioInputLocker/privacy.html](https://tungloong.github.io/AudioInputLocker/privacy.html)。
 
-## 已知后续事项
+## 常见问题
 
-- 归档上传前，在 Apple Developer 账号中注册最终 explicit App ID 和 Team。
-- App Store 提交前，将隐私政策发布到公开 URL。
-- 准备英文和简体中文 App Store 截图。
-- 增加发布打包、签名、notarization 和上传自动化流程。
-- 继续对照 macOS 原生 route HUD 微调 HUD 视觉效果。
-- 随着锁定状态机和 HUD 继续演进，拆分 `AudioInputViewModel.swift`。
+### AudioInputLocker 会录音吗？
+
+不会。AudioInputLocker 不会录制、处理、上传或分析麦克风音频。它只通过 Core Audio 管理系统选中的输入设备。
+
+### 为什么某些设备没有音量滑杆？
+
+有些输入设备没有通过 Core Audio 暴露可写的输入音量控制。只有 macOS 报告该设备支持时，AudioInputLocker 才会显示滑杆。
+
+### 锁定模式支持 AirPods 和 USB 麦克风吗？
+
+这是它主要想解决的场景。当锁定设备在线，并且其他进程改变默认输入设备时，AudioInputLocker 会切回锁定设备。实际表现仍可能受设备固件和 macOS 路由规则影响。
+
+### app 需要麦克风权限吗？
+
+app 不录音，因此正常情况下不需要请求麦克风录制权限。
+
+更多说明见 `docs/troubleshooting.md`。
+
+## Roadmap
+
+- 提供 signed 和 notarized 的直接下载版本。
+- 验证 App Sandbox 下的 Mac App Store 分发可行性。
 - 在可行范围内为锁定状态机补充自动化测试。
+- 在 preview 脚本之外继续补齐发布打包和上传自动化。
 
 ## 贡献
 

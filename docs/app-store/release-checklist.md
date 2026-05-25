@@ -7,8 +7,8 @@
   explicit App ID registered in the Apple Developer account.
 - Price: Free.
 - Fill English and Simplified Chinese metadata from `docs/app-store/metadata.md`.
-- Use `docs/app-store/privacy-policy.md` as the privacy policy source after it
-  is published at a public URL.
+- Use `https://tungloong.github.io/AudioInputLocker/privacy.html` as the privacy
+  policy URL.
 - Set app privacy details to data not collected.
 
 ## Build Validation

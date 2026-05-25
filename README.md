@@ -4,25 +4,46 @@
   <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
 </p>
 
+<p align="center">
+  <a href="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml"><img src="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
+  <a href="https://github.com/tungloong/AudioInputLocker/releases/latest"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
+</p>
+
 [English](README.md) | [简体中文](README_CN.md)
 
-AudioInputLocker is a small macOS menu bar app for managing the system default
-audio input device.
+AudioInputLocker is a small macOS menu bar app for managing and locking the
+system default audio input device.
 
 macOS has a native-looking Sound menu for output devices, but not a matching
 menu for microphones and other input devices. AudioInputLocker fills that gap
 with a Sound-style input menu, plus a lock mode that keeps your preferred input
 device selected when macOS or another app tries to switch it away.
 
+<p align="center">
+  <img src="docs/assets/screenshots/readme-preview.png" width="620" alt="AudioInputLocker menu popover and restore HUD screenshots">
+</p>
+
 ## Status
 
 AudioInputLocker is early open-source software. The source is available under
-the MIT License, but there is not a signed public download yet. For now, build
-and run it from source.
+the MIT License, and preview builds are available from GitHub Releases.
 
 Mac App Store and notarized direct distribution are being prepared. The main
 technical validation still needed for the App Store path is confirming that App
 Sandbox does not block the Core Audio device-switching behavior on real Macs.
+
+## Download
+
+- [Latest GitHub Release](https://github.com/tungloong/AudioInputLocker/releases/latest)
+- Current preview builds are not notarized. macOS may show a Gatekeeper warning.
+- For the most transparent path, build and run from source.
+
+## Screenshots
+
+| Menu popover | Restore HUD |
+| --- | --- |
+| <img src="docs/assets/screenshots/menu-popover.png" width="360" alt="AudioInputLocker menu popover"> | <img src="docs/assets/screenshots/restore-hud.png" width="360" alt="AudioInputLocker restore HUD"> |
 
 ## Features
 
@@ -111,9 +132,12 @@ device itself.
 - `AudioInputLocker/HUDMicrophone.png`: HUD microphone asset.
 - `AudioInputLocker/Assets.xcassets`: app icon and menu bar icon assets.
 - `scripts/build-and-run.sh`: local build and restart helper.
+- `scripts/package-preview-release.sh`: local preview release packaging helper.
 - `docs/visual-assets.md`: icon assets and visual notes.
+- `docs/troubleshooting.md`: FAQ and troubleshooting notes.
 - `docs/github-release.md`: GitHub repository setup notes.
 - `docs/app-store`: App Store metadata, privacy policy, and release checklist.
+- `docs/releases`: release notes used for GitHub Releases.
 - `docs/liquid-glass-investigation.md`: historical notes from HUD visual
   experiments.
 - `docs/project-notes.md`: early project context and implementation notes.
@@ -140,20 +164,40 @@ AudioInputLocker works locally on your Mac. It does not include analytics,
 network calls, accounts, or telemetry.
 
 The app stores only local preferences such as the locked input device identifier
-and display name. See `docs/app-store/privacy-policy.md` for the current privacy
-policy draft.
+and display name. The public privacy policy is available at
+[tungloong.github.io/AudioInputLocker/privacy.html](https://tungloong.github.io/AudioInputLocker/privacy.html).
 
-## Known Follow-Ups
+## FAQ
 
-- Register the final explicit App ID and Apple Developer Team before archiving
-  for App Store Connect.
-- Publish the privacy policy at a public URL before App Store submission.
-- Capture final App Store screenshots in English and Simplified Chinese.
-- Add release packaging, signing, notarization, and upload automation.
-- Continue visual tuning of the HUD against native macOS route HUDs.
-- Split `AudioInputViewModel.swift` into smaller units as the lock state machine
-  and HUD evolve.
+### Does AudioInputLocker record audio?
+
+No. AudioInputLocker does not record, process, upload, or analyze microphone
+audio. It only manages the selected system input device through Core Audio.
+
+### Why does a device have no volume slider?
+
+Some input devices do not expose a writable input-volume control through Core
+Audio. The slider appears only when macOS reports that the device supports it.
+
+### Does lock mode work with AirPods and USB microphones?
+
+That is the main workflow. When the locked device is online and another process
+changes the default input, AudioInputLocker switches back to the locked device.
+Behavior can still vary by device firmware and macOS routing rules.
+
+### Does the app need microphone permission?
+
+The app does not record audio, so it is not expected to request microphone
+recording permission.
+
+More notes are in `docs/troubleshooting.md`.
+
+## Roadmap
+
+- Ship a signed and notarized direct-download build.
+- Validate App Sandbox behavior for Mac App Store distribution.
 - Add automated coverage for the lock state machine where practical.
+- Add release packaging and upload automation beyond the preview script.
 
 ## Contributing
 
