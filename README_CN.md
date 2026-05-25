@@ -10,15 +10,11 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
 </p>
 
-[English](README.md) | [简体中文](README_CN.md)
+[English](README.md) | [简体中文](README_CN.md) | [项目主页](https://tungloong.github.io/AudioInputLocker/)
 
 AudioInputLocker 是一个用于管理 macOS 系统默认音频输入设备的小型菜单栏 app。
 
 macOS 已经有一个原生风格的声音输出菜单，但没有一个同样顺手的麦克风和输入设备菜单。AudioInputLocker 补上了这块空白：它提供一个接近系统声音菜单的输入设备菜单，并加入锁定模式，在 macOS 或其他 app 尝试切走输入设备时，自动切回你偏好的设备。
-
-<p align="center">
-  <img src="docs/assets/screenshots/readme-preview.png" width="620" alt="AudioInputLocker 菜单弹窗和恢复 HUD 截图">
-</p>
 
 ## 当前状态
 

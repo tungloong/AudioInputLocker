@@ -10,7 +10,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
 </p>
 
-[English](README.md) | [简体中文](README_CN.md)
+[English](README.md) | [简体中文](README_CN.md) | [Project page](https://tungloong.github.io/AudioInputLocker/)
 
 AudioInputLocker is a small macOS menu bar app for managing and locking the
 system default audio input device.
@@ -19,10 +19,6 @@ macOS has a native-looking Sound menu for output devices, but not a matching
 menu for microphones and other input devices. AudioInputLocker fills that gap
 with a Sound-style input menu, plus a lock mode that keeps your preferred input
 device selected when macOS or another app tries to switch it away.
-
-<p align="center">
-  <img src="docs/assets/screenshots/readme-preview.png" width="620" alt="AudioInputLocker menu popover and restore HUD screenshots">
-</p>
 
 ## Status
 
