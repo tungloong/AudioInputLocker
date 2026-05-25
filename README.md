@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml"><img src="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
-  <a href="https://github.com/tungloong/AudioInputLocker/releases/latest"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
+  <a href="https://github.com/tungloong/AudioInputLocker/releases"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
 </p>
 
@@ -35,7 +35,8 @@ Sandbox does not block the Core Audio device-switching behavior on real Macs.
 
 ## Download
 
-- [Latest GitHub Release](https://github.com/tungloong/AudioInputLocker/releases/latest)
+- [0.1.0 Preview Release](https://github.com/tungloong/AudioInputLocker/releases/tag/v0.1.0-preview)
+- [All GitHub Releases](https://github.com/tungloong/AudioInputLocker/releases)
 - Current preview builds are not notarized. macOS may show a Gatekeeper warning.
 - For the most transparent path, build and run from source.
 

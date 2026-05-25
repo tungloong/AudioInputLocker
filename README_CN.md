@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml"><img src="https://github.com/tungloong/AudioInputLocker/actions/workflows/build.yml/badge.svg" alt="Build status"></a>
-  <a href="https://github.com/tungloong/AudioInputLocker/releases/latest"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
+  <a href="https://github.com/tungloong/AudioInputLocker/releases"><img src="https://img.shields.io/github/v/release/tungloong/AudioInputLocker?include_prereleases&label=release" alt="Latest release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/tungloong/AudioInputLocker" alt="MIT License"></a>
 </p>
 
@@ -28,7 +28,8 @@ Mac App Store 和 notarized 直接分发都在准备中。App Store 路线还需
 
 ## 下载
 
-- [最新 GitHub Release](https://github.com/tungloong/AudioInputLocker/releases/latest)
+- [0.1.0 Preview Release](https://github.com/tungloong/AudioInputLocker/releases/tag/v0.1.0-preview)
+- [全部 GitHub Releases](https://github.com/tungloong/AudioInputLocker/releases)
 - 当前 preview 构建尚未 notarize，macOS 可能会显示 Gatekeeper 警告。
 - 如果你希望路径最透明，建议从源码构建运行。
 
