@@ -1,5 +1,13 @@
 # AudioInputLocker
 
+> **维护已结束 — 2026 年 9 月 7 日**
+>
+> AudioInputLocker 是一个已经完成开发的单麦克风锁定工具，此后不再更新。现有源码、文档和下载会继续保留在本仓库。
+>
+> 如果你希望按优先级排列麦克风，并在设备断连时自动使用下一项，请访问 **[MicFirst](https://github.com/tungloong/MicFirst)**。MicFirst 拥有独立的交互方式、仓库和发布记录，是另一个产品。
+>
+> 下文保留为 AudioInputLocker 的使用与历史说明，其中早期路线图和分发计划不再推进。
+
 <p align="center">
   <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
 </p>

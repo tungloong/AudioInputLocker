@@ -1,5 +1,13 @@
 # AudioInputLocker
 
+> **Maintenance concluded — September 7, 2026**
+>
+> AudioInputLocker is a complete utility for locking a single microphone and will receive no further updates. Its source, documentation, and existing downloads remain available here.
+>
+> For an ordered microphone list with automatic fallback, visit **[MicFirst](https://github.com/tungloong/MicFirst)**. MicFirst is a separate product with its own interaction model, repository, and release history.
+>
+> The documentation below is retained for AudioInputLocker; its earlier roadmap and distribution plans are no longer active.
+
 <p align="center">
   <img src="docs/assets/audio-input-locker-app-icon-256.png" width="112" alt="AudioInputLocker app icon">
 </p>
